@@ -1,16 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { PostContext } from "../../modules/PostManager.js";
+import { UserProfileContext } from '../../modules/UserProfileManager.js';
+
+
 
 export const PostDetails = () => {
     const { id } = useParams();
     const [post, setPost] = useState();
-    const { getPostById } = useContext(PostContext);
+    const { getPostById, deletePost } = useContext(PostContext);
     const history = useHistory();
-console.log(PostContext);
+    const { currentUserId } = useContext(UserProfileContext);
+    console.log(PostContext);
+
     useEffect(() => {
         getPostById(id).then(setPost);
     }, []);
+
+    const handleDelete = () => {
+        if (window.confirm('Are you sure?')) {
+            deletePost(post.id).then(() => {
+                history.push(`/posts/myposts/${currentUserId}`);
+            });
+        }
+    };
 
     const handleDate = () => {
         let date = new Date(post.publishDateTime).toLocaleDateString('en-US');
@@ -21,6 +34,7 @@ console.log(PostContext);
     if (!post) {
         return null;
     }
+
 
     return (
         <div className="container">
@@ -48,7 +62,15 @@ console.log(PostContext);
                                 <strong>Category:</strong> {post.category.name}
                             </p>
                         </p>
-                    </div>
+                        {currentUserId === post.userProfileId ? (
+                            <i
+                                className="fas fa-trash-alt fa-2x"
+                                onClick={handleDelete}
+                                style={{ cursor: 'pointer' }}
+                            ></i>
+                        ) : null}
+                    </div>    
+                    
 
                     <p>{post.content}</p>
                     {/* tags go here */}
