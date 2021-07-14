@@ -15,7 +15,7 @@ import { UserProfileContext } from '../modules/UserProfileManager.js';
 export default function Header({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
-  const {currentUserId} = useContext(UserProfileContext);
+  const { currentUserId } = useContext(UserProfileContext);
 
   console.log(currentUserId)
   return (
@@ -28,34 +28,41 @@ export default function Header({ isLoggedIn }) {
             { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
 
-            <React.Fragment>
+              <React.Fragment>
 
-              <NavItem>
-                <NavLink tag={RRNavLink} to="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                </NavItem>
+                <NavItem>
 
-              <NavLink tag={RRNavLink} to="/category">Category Management</NavLink>
-            </NavItem>
-            </React.Fragment>
+                  <NavLink tag={RRNavLink} to="/category">Category Management</NavLink>
+                </NavItem>
 
-                <NavLink tag={RRNavLink} to="/UserProfile">Users</NavLink>
-              </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/UserProfile">Users</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/posts">
+                    Posts
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink} to={`/posts/myposts/${currentUserId}`}>
+                    My Posts
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink} to={`/tag`}>
+                    Tags
+                  </NavLink>
+                </NavItem>
               </React.Fragment>
 
 
             }
-              <NavItem>
-           <NavLink tag={RRNavLink} to="/posts">
-            Posts
-           </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                tag={RRNavLink} to={`/posts/myposts/${currentUserId}`}>
-                  My Posts
-              </NavLink>
-            </NavItem>
+
           </Nav>
           <Nav navbar>
             {isLoggedIn &&
@@ -64,7 +71,7 @@ export default function Header({ isLoggedIn }) {
                   <a aria-current="page" className="nav-link"
                     style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                 </NavItem>
-                
+
               </>
             }
             {!isLoggedIn &&
