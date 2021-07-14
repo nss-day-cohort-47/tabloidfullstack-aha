@@ -20,17 +20,17 @@ namespace Tabloid.Controllers
         }
         // GET: api/<CommentController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get(int postId)
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_commentRepository.GetCommentsByPost(postId));
         }
 
         // GET api/<CommentController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
         // POST api/<CommentController>
         [HttpPost]
