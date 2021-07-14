@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
-import { editTag, getTagById } from "../../modules/tagManager";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { addTag } from "../../modules/tagManager";
 import { Form, FormGroup, Button, Container } from "reactstrap";
 
 const AddNewTag = () => {
-    const [tag, setTag] = useState({})
-    const { id } = useParams();
+    const [tag, setTag] = useState({
+        name: ""
+    })
 
     const history = useHistory();
-
 
     const handleInputChange = (event) => {
         const newTag = { ...tag }
@@ -21,7 +21,8 @@ const AddNewTag = () => {
         if (tag.name === "") {
             window.alert("Please fill in all fields")
         } else {
-            editTag(tag)
+            console.log(tag)
+            addTag(tag)
                 .then(() => history.push('/tag'))
         }
 
@@ -30,9 +31,6 @@ const AddNewTag = () => {
         click.preventDefault()
         history.push('/tag')
     }
-    useEffect(()=> {
-        getTagById(id).then(setTag)
-    },[id])
 
     return (
         <Container className="justified-content-center">
@@ -45,7 +43,8 @@ const AddNewTag = () => {
                         required
                         autoComplete="off"
                         className="form-control"
-                        defaultValue={tag.name} />
+                        placeholder="Name"
+                        value={tag.name} />
                 </FormGroup>
             </Form>
             <Button className="article-btn"
