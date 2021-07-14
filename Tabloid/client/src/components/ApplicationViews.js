@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import CategoryList from "./Category/CategoryList";
 
 import PostList from './posts/PostList';
 import { PostDetails } from './posts/PostDetails';
@@ -11,7 +12,6 @@ import UserProfileList from "./userProfile/UserProfileList";
 
 import TagList from "./Tags/TagList";
 export default function ApplicationViews({ isLoggedIn }) {
-
   return (
     <main>
       <Switch>
@@ -43,10 +43,16 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Register />
         </Route>
 
+
+        <Route path="/category">
+          <CategoryList />
+           </Route>
+
         <Route path="/tag">
           <TagList />
         </Route>
+
       </Switch>
     </main>
   );
-};
+}
