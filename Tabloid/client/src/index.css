@@ -16,3 +16,8 @@ p {
 .post p {
     white-space: pre-wrap;
 }
+
+.UserList{
+  display: flex;
+  justify-content:left;
+}
