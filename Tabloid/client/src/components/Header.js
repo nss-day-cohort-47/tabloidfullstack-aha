@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
   Collapse,
@@ -10,11 +10,14 @@ import {
   NavLink
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
+import { UserProfileContext } from '../modules/UserProfileManager.js';
 
 export default function Header({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const {currentUserId} = useContext(UserProfileContext);
 
+  console.log(currentUserId)
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -34,6 +37,17 @@ export default function Header({ isLoggedIn }) {
               </React.Fragment>
 
             }
+              <NavItem>
+           <NavLink tag={RRNavLink} to="/posts">
+            Posts
+           </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                tag={RRNavLink} to={`/posts/myposts/${currentUserId}`}>
+                  My Posts
+              </NavLink>
+            </NavItem>
           </Nav>
           <Nav navbar>
             {isLoggedIn &&
