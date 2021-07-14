@@ -1,6 +1,9 @@
-import React from "react";
-
+import {React, useContext} from "react";
+import { UserProfileContext } from '../modules/postUserProfileManager.js';
 export default function Hello() {
+  const {currentUserId} = useContext(UserProfileContext);
+
+  console.log(currentUserId)
   return (
     <span style={{
       position: "fixed",
