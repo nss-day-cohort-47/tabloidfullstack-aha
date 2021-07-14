@@ -1,5 +1,5 @@
 import {React, useContext} from "react";
-import { UserProfileContext } from '../modules/UserProfileManager.js';
+import { UserProfileContext } from '../modules/postUserProfileManager.js';
 export default function Hello() {
   const {currentUserId} = useContext(UserProfileContext);
 
