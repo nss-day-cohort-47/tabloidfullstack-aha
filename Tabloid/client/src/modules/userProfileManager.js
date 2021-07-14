@@ -1,4 +1,4 @@
-cd ..import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Spinner } from 'reactstrap';
 import firebase from 'firebase/app';
 import 'firebase/auth';
