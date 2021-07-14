@@ -10,7 +10,7 @@ import {
   NavLink
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
-import { UserProfileContext } from '../modules/UserProfileManager.js';
+import { UserProfileContext } from '../modules/postUserProfileManager';
 
 export default function Header({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);

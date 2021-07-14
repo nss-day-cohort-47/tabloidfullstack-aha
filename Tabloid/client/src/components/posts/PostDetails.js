@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { PostContext } from "../../modules/PostManager.js";
-import { UserProfileContext } from '../../modules/UserProfileManager.js';
+import { UserProfileContext } from '../../modules/postUserProfileManager.js';
 
 
 
