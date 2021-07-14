@@ -17,7 +17,7 @@ const CommentList = () => {
         <div className="container">
             <div className="row justify-content-center">
                 {comments?.map((comment) => (
-                    <Comment comment={comment} key={comment.id} />
+                    <Comment comment={comment} key={comment.postId} />
                 ))}
             </div>
         </div>
