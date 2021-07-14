@@ -19,7 +19,7 @@ namespace Tabloid.Controllers
             _commentRepository = commentRepository;
         }
         // GET: api/<CommentController>
-        [HttpGet]
+        [HttpGet("{postId}")]
         public IActionResult Get(int postId)
         {
             return Ok(_commentRepository.GetCommentsByPost(postId));
