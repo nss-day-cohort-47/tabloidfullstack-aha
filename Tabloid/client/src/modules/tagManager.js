@@ -4,7 +4,6 @@ import { getToken } from "./authManager";
 const _apiUrl = "/api/tag";
 
 export const getAllTags = () => {
-    debugger
     return getToken().then((token) => {
         return fetch(`${_apiUrl}`, {
             method: "GET",
@@ -51,15 +50,7 @@ export const deleteTag = (tagId) => {
                 "Content-Type": "application/json"
             },
 
-        }).then(resp => {
-            if (resp.ok) {
-                return resp.json();
-            } else if (resp.status === 401) {
-                throw new Error("Unauthorized");
-            } else {
-                throw new Error("An unknown error occurred while trying to save a new tag.");
-            }
-        });
+        })
     });
 };
 

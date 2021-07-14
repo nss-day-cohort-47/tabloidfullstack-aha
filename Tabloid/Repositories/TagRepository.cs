@@ -17,7 +17,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT id, name FROM Tag";
+                    cmd.CommandText = "SELECT id, name FROM Tag IsDeleted = 0";
                     var reader = cmd.ExecuteReader();
 
                     var tags = new List<Tag>();
