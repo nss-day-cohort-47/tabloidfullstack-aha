@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
-import { getAllCommentsByPost } from "../modules/commentManager";
+import { getAllCommentsByPost } from "../../modules/commentManager";
 
 const CommentList = () => {
     const [comments, setComments] = useState([]);
@@ -16,7 +16,7 @@ const CommentList = () => {
     return (
         <div className="container">
             <div className="row justify-content-center">
-                {comments.map((comment) => (
+                {comments?.map((comment) => (
                     <Comment comment={comment} key={comment.id} />
                 ))}
             </div>

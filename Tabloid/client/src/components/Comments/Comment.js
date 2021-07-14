@@ -6,10 +6,11 @@ const Comment = ({ comment }) => {
     return (
         <Card>
             <CardBody>
-                <div>
-                    Subject: {comment.subject}
-                </div>
+                <h4>Subject: {comment.subject}</h4>
+                <p>{comment.content}</p>
             </CardBody>
         </Card>
     )
-}
+};
+
+export default Comment;
