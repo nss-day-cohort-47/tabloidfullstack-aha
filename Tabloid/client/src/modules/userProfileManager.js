@@ -94,11 +94,6 @@ export function UserProfileProvider(props) {
         );
     };
 
-<<<<<<< HEAD
-}
-//testing
-//this sucks
-=======
     return (
         <UserProfileContext.Provider
             value={{
@@ -118,4 +113,3 @@ export function UserProfileProvider(props) {
         </UserProfileContext.Provider>
     );
 }
->>>>>>> 8c68a00bd568fe756ac22fcb20c627afd6623dde
