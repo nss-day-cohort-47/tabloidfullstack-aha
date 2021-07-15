@@ -196,16 +196,17 @@ namespace Tabloid.Repositories
                 }
             }
         }
-        // I'll add softdelete here in a bit, this is temporary
-        public void DeletePost(int id)
+        public void DeletePost(int postId)
         {
-            using (var conn = Connection)
+            using (SqlConnection conn = Connection)
             {
                 conn.Open();
-                using (var cmd = conn.CreateCommand())
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Post WHERE Id = @Id";
-                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.CommandText = @"UPDATE Post SET IsDeleted=@IsDeleted WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@IsDeleted", 1);
+                    cmd.Parameters.AddWithValue("@Id", postId);
+
                     cmd.ExecuteNonQuery();
                 }
             }
