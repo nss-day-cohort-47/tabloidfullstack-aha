@@ -4,14 +4,14 @@ import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import CommentList from "./Comments/CommentList";
+import TagList from "./Tags/TagList";
+import AddNewTag from "./Tags/TagAddForm";
+import TagEditForm from "./Tags/TagEditForm";
 import CategoryList from "./Category/CategoryList";
-
 import PostList from './posts/PostList';
 import { PostDetails } from './posts/PostDetails';
-
 import UserProfileList from "./userProfile/UserProfileList";
 
-import TagList from "./Tags/TagList";
 export default function ApplicationViews({ isLoggedIn }) {
   return (
     <main>
@@ -32,7 +32,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/UserProfile">          
+        <Route path="/UserProfile">
           <UserProfileList />
         </Route>
 
@@ -47,13 +47,21 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/comment/:postId">
           <CommentList />
         </Route>
+        
+        <Route path="/tag" exact>
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/tag/add">
+          {isLoggedIn ? <AddNewTag /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/tag/edit/:id">
+          {isLoggedIn ? <TagEditForm /> : <Redirect to="/login" />}
+        </Route>
 
         <Route path="/category">
           <CategoryList />
-           </Route>
-
-        <Route path="/tag">
-          <TagList />
         </Route>
 
       </Switch>
