@@ -20,11 +20,11 @@ function App() {
 
   return (
     <Router>
-       <UserProfileProvider>
+      <UserProfileProvider>
         <PostManager>
-      <Header isLoggedIn={isLoggedIn}/>
-      <ApplicationViews isLoggedIn={isLoggedIn}/>
-      </PostManager>
+          <Header isLoggedIn={isLoggedIn} />
+          <ApplicationViews isLoggedIn={isLoggedIn} />
+        </PostManager>
       </UserProfileProvider>
     </Router>
   );
