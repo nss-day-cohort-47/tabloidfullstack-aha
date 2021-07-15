@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
-import { getAllCommentsByPost } from "../../modules/commentManager";
+import { useParams, Link } from "react-router-dom";
+import { PostContext } from "../../modules/PostManager";
 
 const CommentList = () => {
-    const [comments, setComments] = useState([]);
+    const [post, setPost] = useState({});
+    const { getPostById } = useContext(PostContext);
+    const { id } = useParams();
     
-    const getComments = () => {
-        getAllCommentsByPost().then(comments => setComments(comments));
-    };
+    const getPost = () => {
+        getPostById(id).then(post => setPost(post));
+    }
 
     useEffect(() => {
-        getComments();
+        getPost();
     }, []);
 
     return (
         <div className="container">
-            <div className="row justify-content-center">
-                {comments?.map((comment) => (
+            <Link to={`/posts/${post.id}`}>
+                        <strong>{post.title}</strong>
+                    </Link>
+            <div className="row">
+                {post.comments?.map((comment) => (
                     <Comment comment={comment} key={comment.postId} />
                 ))}
             </div>

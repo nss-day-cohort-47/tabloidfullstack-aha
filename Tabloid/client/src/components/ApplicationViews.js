@@ -44,7 +44,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Register />
         </Route>
 
-        <Route path="/comment/:postId">
+        <Route path="/comment/:id">
           <CommentList />
         </Route>
         

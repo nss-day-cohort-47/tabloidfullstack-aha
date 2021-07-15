@@ -12,7 +12,7 @@ namespace Tabloid.Repositories
     {
         public CommentRepository(IConfiguration config) : base(config) { }
 
-        public List<Comment> GetCommentsByPost(int postId)
+        public Post GetCommentsByPost(int postId)
         {
             using (var conn = Connection)
             {
@@ -23,8 +23,8 @@ namespace Tabloid.Repositories
                         SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime,
                                p.Title AS PostTitle, p.Content AS PostContent, p.ImageLocation AS PostImageLocation, p.CreateDateTime AS PostCreateDateTime, p.IsApproved AS PostIsApproved,
                                up.DisplayName AS UserDisplayName, up.FirstName AS UserFirstName, up.LastName AS UserLastName, up.Email AS UserEmail, up.CreateDateTime AS UserCreateDateTime, up.ImageLocation AS UserImageLocation, up.UserTypeId
-                        FROM Comment c
-                        LEFT JOIN Post p ON p.Id = c.PostId
+                        FROM Post p
+                        LEFT JOIN Comment c ON p.Id = c.PostId
                         LEFT JOIN UserProfile up ON up.Id = p.UserProfileId
                         WHERE c.PostId = @postId
                     ";
@@ -32,44 +32,52 @@ namespace Tabloid.Repositories
 
                     var reader = cmd.ExecuteReader();
 
-                    List<Comment> comments = new List<Comment>();
+                    Post post = null;
 
                     while (reader.Read())
                     {
-                        Comment comment = new Comment()
+                        if (post == null)
                         {
-                            Id = DbUtils.GetInt(reader, "Id"),
-                            PostId = DbUtils.GetInt(reader, "PostId"),
-                            UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
-                            Subject = DbUtils.GetString(reader, "Subject"),
-                            Content = DbUtils.GetString(reader, "Content"),
-                            CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
-                            Post = new Post()
+                            post = new Post()
                             {
-                                Id = DbUtils.GetInt(reader, "PostId"),
+                                Id = postId,
                                 Title = DbUtils.GetString(reader, "PostTitle"),
                                 Content = DbUtils.GetString(reader, "PostContent"),
                                 ImageLocation = DbUtils.GetString(reader, "PostImageLocation"),
                                 CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
-                                IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved"))
-                            },
-                            UserProfile = new UserProfile()
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved")),
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                    DisplayName = DbUtils.GetString(reader, "UserDisplayName"),
+                                    FirstName = DbUtils.GetString(reader, "UserFirstName"),
+                                    LastName = DbUtils.GetString(reader, "UserLastName"),
+                                    Email = DbUtils.GetString(reader, "UserEmail"),
+                                    CreateDateTime = DbUtils.GetDateTime(reader, "UserCreateDateTime"),
+                                    ImageLocation = DbUtils.GetString(reader, "UserImageLocation"),
+                                    UserTypeId = DbUtils.GetInt(reader, "UserTypeId")
+                                },
+                                Comments = new List<Comment>()
+                            };
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "Id"))
+                        {
+                            post.Comments.Add(new Comment()
                             {
-                                Id = DbUtils.GetInt(reader, "UserProfileId"),
-                                DisplayName = DbUtils.GetString(reader, "UserDisplayName"),
-                                FirstName = DbUtils.GetString(reader, "UserFirstName"),
-                                LastName = DbUtils.GetString(reader, "UserLastName"),
-                                Email = DbUtils.GetString(reader, "UserEmail"),
-                                CreateDateTime = DbUtils.GetDateTime(reader, "UserCreateDateTime"),
-                                ImageLocation = DbUtils.GetString(reader, "UserImageLocation"),
-                                UserTypeId = DbUtils.GetInt(reader, "UserTypeId")
-                            }
-                        };
-                        comments.Add(comment);
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                PostId = postId,
+                                UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
+                                Subject = DbUtils.GetString(reader, "Subject"),
+                                Content = DbUtils.GetString(reader, "Content"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
+                            });
+                        }
                     }
                     reader.Close();
 
-                    return comments;
+                    return post;
                 }
             }
         }
