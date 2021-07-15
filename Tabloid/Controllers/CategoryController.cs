@@ -26,8 +26,8 @@ namespace Tabloid.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        
-
+        //-----------------------------------------------------------------------
+        //GET ALL CATEGORIES
         // GET: CategoryController
         [HttpGet]
         public IActionResult Get()
@@ -35,9 +35,26 @@ namespace Tabloid.Controllers
             return Ok(_categoryRepository.GetAllCategories());
         }
 
+        //----------------------------------------------------------------------
+        //ADD A CATEGORY NAME
+        [HttpPost]
+        public IActionResult AddCategory(Category category)
+        {
+            DateTime dateCreated = DateTime.Now;
 
+            _categoryRepository.AddCategory(category);
+            return CreatedAtAction("Get", new { id = category.Id }, category);
+        }
 
+        //----------------------------------------------------------------------
+        //DELETE A CATEGORY
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _categoryRepository.DeleteCategory(id);
+            return NoContent();
+        }
 
 
 
