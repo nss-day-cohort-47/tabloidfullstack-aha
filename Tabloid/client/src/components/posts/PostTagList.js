@@ -11,7 +11,7 @@ import {
 import { useParams } from 'react-router';
 import PostTagCard from "./PostTagCard";
 import { PostContext } from "../../modules/PostManager.js";
-import { getAllPostTags, getTagsNotonPost, addPostTag } from "../../modules/tagManager";
+import { getAllPostTags, getAllTags, addPostTag } from "../../modules/tagManager";
 
 const PostTagList = () => {
     const [posttags, setPostTags] = useState([]);
@@ -23,7 +23,7 @@ const PostTagList = () => {
     const { getPostById } = useContext(PostContext);
 
     const getTags = () => {
-        getTagsNotonPost(id).then(taglist => {setTags(taglist)
+        getAllTags().then(taglist => {setTags(taglist)
         });
     }
 
