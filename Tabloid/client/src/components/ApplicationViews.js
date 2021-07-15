@@ -11,7 +11,9 @@ import TagList from "./Tags/TagList";
 import AddNewCategory from "./Category/CategoryAddForm";
 import CategoryEditForm from "./Category/CategoryEditForm";
 
+
 export default function ApplicationViews({ isLoggedIn }) {
+
   return (
     <main>
       <Switch>

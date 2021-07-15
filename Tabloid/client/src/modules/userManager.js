@@ -18,3 +18,5 @@ export const GetAllUsers = () =>{
       });
 
 }
+
+// export default GetAllUsers;
