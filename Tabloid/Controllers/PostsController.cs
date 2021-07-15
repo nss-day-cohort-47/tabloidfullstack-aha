@@ -90,18 +90,19 @@ namespace Tabloid.Controllers
             }
             else
             {
-                var posts = _postRepository.GetAllUserPosts(user.FirebaseUserId);
+                var posts = _postRepository.GetAllUserPosts(user);
                 return Ok(posts);
             }
         }
 
-        private UserProfile GetCurrentUserProfile()
+        private string GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             if (firebaseUserId != null)
             {
-                return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+                
+                return firebaseUserId;
             }
             else
             {

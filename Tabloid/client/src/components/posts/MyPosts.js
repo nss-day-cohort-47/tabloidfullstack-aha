@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUserPosts } from '../../modules/PostManager';
-import Post from "./PostList";
+import Post from "./PostListCard";
 
 const MyPosts = () => {
 
@@ -8,10 +8,11 @@ const MyPosts = () => {
 
 
   const fetchUserPosts = () => {
+    
     return getAllUserPosts().then(posts => setPosts(posts))
   }
 
-
+  console.log(posts)
   useEffect(() => {
     fetchUserPosts();
   }, []);
