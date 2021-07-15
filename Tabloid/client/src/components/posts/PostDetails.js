@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import { PostContext } from "../../modules/PostManager.js";
 import { UserProfileContext } from '../../modules/postUserProfileManager.js';
 
@@ -73,6 +73,9 @@ export const PostDetails = () => {
                     
 
                     <p>{post.content}</p>
+                    <Link to={`/comment/${post.id}`}>
+                        <button>View Comments</button>
+                    </Link>
                     {/* tags go here */}
                 </div>
             </div>
