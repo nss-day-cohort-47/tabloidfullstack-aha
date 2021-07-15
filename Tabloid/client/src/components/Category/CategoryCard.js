@@ -27,7 +27,6 @@ export const Category = ({ category }) => {
 <label style={{width: "10em"}}>{category.name} </label>
 <button onClick={()=> history.push(`/category/edit/${category.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Edit</button>
 <button onClick={deletecategory} style={{width: "5em",marginLeft:".5rem"}}>Delete</button>
-<button onClick={()=> history.push(`/category/add/${category.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Add</button>
     </div>
 </CardBody>
 </Card>
