@@ -181,5 +181,40 @@ namespace Tabloid.Repositories
                 return add.Id;
             }
         }
+
+        public List<Tag> GetTagsNotonPost(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT pt.postId, t.name, t.id 
+                                FROM Tag t
+                                left join PostTag pt on t.id = pt.TagId
+                                where pt.PostId != @id or pt.postId is null ";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    var tags = new List<Tag>();
+
+                    while (reader.Read())
+                    {
+                        if (reader.IsDBNull(reader.GetOrdinal("PostId")))
+                        {
+                            tags.Add(new Tag()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("name")),
+                            });
+                        }
+                    }
+
+                    reader.Close();
+
+                    return tags;
+                }
+            }
+        }
     }
 }

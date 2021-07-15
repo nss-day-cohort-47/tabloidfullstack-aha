@@ -74,6 +74,7 @@ export const PostDetails = () => {
 
                     <p>{post.content}</p>
                     {/* tags go here */}
+                    <button onClick={()=> history.push(`/posts/tag/${post.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Manage Tags</button>
                 </div>
             </div>
         </div>

@@ -21,6 +21,7 @@ const TagList = () => {
         getAllTags().then(taglist => {setTags(taglist)
         console.log(taglist)});
     }
+    
 
     useEffect(()=> {
         getTags();
