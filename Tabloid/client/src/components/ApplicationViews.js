@@ -10,6 +10,7 @@ import CategoryList from "./Category/CategoryList";
 import PostList from './posts/PostList';
 import { PostDetails } from './posts/PostDetails';
 import UserProfileList from "./userProfile/UserProfileList";
+import UserProfileForm from "./userProfile/UserProfileForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -31,12 +32,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/userprofile">
-          <UserProfileList />
+        <Route path="/userprofile" exact>
+        {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/userprofile/edit/:id">
-          {isLoggedIn ? <TagEditForm /> : <Redirect to="/login" />}
+          {isLoggedIn ? <UserProfileForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">

@@ -9,5 +9,6 @@ namespace Tabloid.Repositories
         void Delete(int id);
         List<UserProfile> GetAllUsers();
         UserProfile GetByFirebaseUserId(string firebaseUserId);
+        UserProfile GetUserById(int id);
     }
 }

@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import { editTag, getTagById } from "../../modules/tagManager";
-import { Form, FormGroup, Button, Container } from "reactstrap";
+import { editUser, getUserById } from "../../modules/userManager";
+import { Form, FormGroup, Button, Container, Label, Input } from "reactstrap";
 
 const UserProfileForm = () => {
-    const [tag, setTag] = useState({})
+    const [user, setUser] = useState({})
     const { id } = useParams();
 
     const history = useHistory();
 
 
     const handleInputChange = (event) => {
-        const newTag = { ...tag }
+        const newUser = { ...user }
         let selectedValue = event.target.value
-        newTag[event.target.id] = selectedValue
-        setTag(newTag)
+        newUser[event.target.id] = selectedValue
+        setUser(newUser)
     }
     const handleSaveEvent = (click) => {
         click.preventDefault()
-        if (tag.name === "") {
+        if (user.name === "") {
             window.alert("Please fill in all fields")
         } else {
-            editTag(tag)
+            editUser(user)
                 .then(() => history.push('/userprofile'))
         }
 
@@ -30,22 +30,64 @@ const UserProfileForm = () => {
         click.preventDefault()
         history.push('/userprofile')
     }
-    useEffect(()=> {
-        getTagById(id).then(setTag)
-    },[id])
+    useEffect(() => {
+        getUserById(id).then(setUser)
+    }, [id])
 
     return (
         <Container className="justified-content-center">
             <Form>
                 <FormGroup>
-                    <label>Tag Name</label>
+                    <label>First Name</label>
                     <input type="text"
-                        id="name"
+                        id="firstName"
                         onChange={handleInputChange}
                         required
                         autoComplete="off"
                         className="form-control"
-                        defaultValue={tag.name} />
+                        defaultValue={user.firstName} />
+                    <label>Last Name</label>
+                    <input type="text"
+                        id="lastName"
+                        onChange={handleInputChange}
+                        required
+                        autoComplete="off"
+                        className="form-control"
+                        defaultValue={user.lastName} />
+                    <label>Diplay Name</label>
+                    <input type="text"
+                        id="displayName"
+                        onChange={handleInputChange}
+                        required
+                        autoComplete="off"
+                        className="form-control"
+                        defaultValue={user.displayName} />
+                </FormGroup>
+                <FormGroup>
+                    <label>Diplay Name</label>
+                    <input type="text"
+                        id="email"
+                        onChange={handleInputChange}
+                        required
+                        autoComplete="off"
+                        className="form-control"
+                        defaultValue={user.email} />
+
+
+                </FormGroup>
+                <FormGroup>
+                    <Label for="exampleSelect">Select</Label>
+                    <Input type="select" 
+                           name="select" 
+                           id="userType"
+                           onChange={handleInputChange}
+                            required
+                            autoComplete="off"
+                            className="form-control"
+                            defaultValue={user.email} >
+                        <option>Author</option>
+                        <option>Admin</option>
+                    </Input>
                 </FormGroup>
             </Form>
             <Button className="article-btn"
