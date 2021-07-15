@@ -44,16 +44,16 @@ namespace Tabloid.Repositories
                             Subject = DbUtils.GetString(reader, "Subject"),
                             Content = DbUtils.GetString(reader, "Content"),
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
-                            //Post = new Post()
-                            //{
-                            //    Id = DbUtils.GetInt(reader, "PostId"),
-                            //    Title = DbUtils.GetString(reader, "PostTitle"),
-                            //    Content = DbUtils.GetString(reader, "PostContent"),
-                            //    ImageLocation = DbUtils.GetString(reader, "PostImageLocation"),
-                            //    CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
-                            //    PublishDateTime = DbUtils.GetDateTime(reader, "PostPublishDateTime"),
-                            //    IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved"))
-                            //},
+                            Post = new Post()
+                            {
+                                Id = DbUtils.GetInt(reader, "PostId"),
+                                Title = DbUtils.GetString(reader, "PostTitle"),
+                                Content = DbUtils.GetString(reader, "PostContent"),
+                                ImageLocation = DbUtils.GetString(reader, "PostImageLocation"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
+                                PublishDateTime = DbUtils.GetDateTime(reader, "PostPublishDateTime"),
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved"))
+                            },
                             UserProfile = new UserProfile()
                             {
                                 Id = DbUtils.GetInt(reader, "UserProfileId"),
@@ -105,16 +105,16 @@ namespace Tabloid.Repositories
                             Subject = DbUtils.GetString(reader, "Subject"),
                             Content = DbUtils.GetString(reader, "Content"),
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
-                            //Post = new Post()
-                            //{
-                            //    Id = DbUtils.GetInt(reader, "PostId"),
-                            //    Title = DbUtils.GetString(reader, "PostTitle"),
-                            //    Content = DbUtils.GetString(reader, "PostContent"),
-                            //    ImageLocation = DbUtils.GetString(reader, "PostImageLocation"),
-                            //    CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
-                            //    PublishDateTime = DbUtils.GetDateTime(reader, "PostPublishDateTime"),
-                            //    IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved"))
-                            //},
+                            Post = new Post()
+                            {
+                                Id = DbUtils.GetInt(reader, "PostId"),
+                                Title = DbUtils.GetString(reader, "PostTitle"),
+                                Content = DbUtils.GetString(reader, "PostContent"),
+                                ImageLocation = DbUtils.GetString(reader, "PostImageLocation"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
+                                PublishDateTime = DbUtils.GetDateTime(reader, "PostPublishDateTime"),
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved"))
+                            },
                             UserProfile = new UserProfile()
                             {
                                 Id = DbUtils.GetInt(reader, "UserProfileId"),
