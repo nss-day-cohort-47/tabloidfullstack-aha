@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
   Collapse,
@@ -10,11 +10,14 @@ import {
   NavLink
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
+import { UserProfileContext } from '../modules/postUserProfileManager';
 
 export default function Header({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const { currentUserId } = useContext(UserProfileContext);
 
+  console.log(currentUserId)
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -24,10 +27,42 @@ export default function Header({ isLoggedIn }) {
           <Nav className="mr-auto" navbar>
             { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
-              <NavItem>
-                <NavLink tag={RRNavLink} to="/">Home</NavLink>
-              </NavItem>
+
+              <React.Fragment>
+
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/">Home</NavLink>
+                </NavItem>
+                <NavItem>
+
+                  <NavLink tag={RRNavLink} to="/category">Category Management</NavLink>
+                </NavItem>
+
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/UserProfile">Users</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/posts">
+                    Posts
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink} to={`/posts/myposts/${currentUserId}`}>
+                    My Posts
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    tag={RRNavLink} to={`/tag`}>
+                    Tags
+                  </NavLink>
+                </NavItem>
+              </React.Fragment>
+
+
             }
+
           </Nav>
           <Nav navbar>
             {isLoggedIn &&
@@ -36,6 +71,7 @@ export default function Header({ isLoggedIn }) {
                   <a aria-current="page" className="nav-link"
                     style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                 </NavItem>
+
               </>
             }
             {!isLoggedIn &&
