@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
 import { useParams, Link } from "react-router-dom";
 import { PostContext } from "../../modules/PostManager";
+import { Button } from "reactstrap";
 
 const CommentList = () => {
     const [post, setPost] = useState({});
@@ -23,9 +24,12 @@ const CommentList = () => {
                     </Link>
             <div className="row">
                 {post.comments?.map((comment) => (
-                    <Comment comment={comment} key={comment.postId} />
+                    <Comment comment={comment} post={post} key={comment.Id} />
                 ))}
             </div>
+            <Link to={`/comment/${post.id}/add`}>
+                <Button>Add Comment</Button>
+            </Link>
         </div>
     );
 }
