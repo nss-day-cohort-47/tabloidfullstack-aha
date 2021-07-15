@@ -9,7 +9,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import {GetAllUsers} from "../../modules/userProfileManager"
+import {GetAllUsers} from "../../modules/userManager"
 import UserProfile from './UserProfile';
 
 export default function UserProfileList() {
