@@ -4,6 +4,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
 import CommentList from "./Comments/CommentList";
+import AddNewComment from "./Comments/CommentForm";
 import TagList from "./Tags/TagList";
 import AddNewTag from "./Tags/TagAddForm";
 import TagEditForm from "./Tags/TagEditForm";
@@ -49,8 +50,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Register />
         </Route>
 
-        <Route path="/comment/:id">
+        <Route path="/comment/:id" exact>
           <CommentList />
+        </Route>
+
+        <Route path="/comment/:id/add">
+          <AddNewComment />
         </Route>
         
         <Route path="/tag" exact>
