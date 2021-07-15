@@ -1,9 +1,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
+using System.Security.Claims;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tabloid.Models;
 using Tabloid.Utils;
 
@@ -213,6 +211,45 @@ namespace Tabloid.Repositories
         }
 
 
+        public List<Post> GetAllUserPosts(string FirebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT p.Id, p.Title, p.Content, 
+                              p.ImageLocation AS HeaderImage,
+                              p.CreateDateTime, p.PublishDateTime, p.IsApproved, 
+                              p.CategoryId, p.UserProfileId,
+                              c.[Name] AS CategoryName,
+                              u.FirstName, u.LastName, u.DisplayName, 
+                              u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
+                              u.UserTypeId, 
+                              ut.[Name] AS UserTypeName
+                         FROM Post p
+                              LEFT JOIN Category c ON p.CategoryId = c.id
+                              LEFT JOIN UserProfile u ON p.UserProfileId = u.id
+                              LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                        WHERE PublishDateTime < SYSDATETIME() AND u.FirebaseUserId = @FirebaseUserId
+                        ORDER BY PublishDateTime DESC";
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", FirebaseUserId);
+                    var reader = cmd.ExecuteReader();
+
+                    var posts = new List<Post>();
+
+                    while (reader.Read())
+                    {
+                        posts.Add(NewPostFromDb(reader));
+                    }
+
+                    reader.Close();
+
+                    return posts;
+                }
+            }
+        }
 
         private Post NewPostFromDb(SqlDataReader reader)
         {

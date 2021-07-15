@@ -80,21 +80,34 @@ namespace Tabloid.Controllers
             _postRepository.DeletePost(id);
             return NoContent();
         }
-        [HttpGet("userProfileId/{userProfileId}")]
-    //    public IActionResult GetCurrentUserPosts(int userProfileId)
-  //      {
-    //        var posts = _postRepository.GetPostByUserProfileId(userProfileId);
-   //         var CurrentUserID = GetCurrentUserProfile();
-   //         if (CurrentUserID == null)
-   //         {
-   //             return NotFound();
-    //        }
-    //        return Ok(posts);
-      //  }
+        [HttpGet("GetAllUserPosts")]
+        public IActionResult GetAllUserPosts()
+        {
+            var user = GetCurrentUserProfile();
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var posts = _postRepository.GetAllUserPosts(user.FirebaseUserId);
+                return Ok(posts);
+            }
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+
+            if (firebaseUserId != null)
+            {
+                return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
+
