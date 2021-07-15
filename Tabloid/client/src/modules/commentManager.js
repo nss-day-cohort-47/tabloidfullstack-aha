@@ -34,3 +34,15 @@ export const addComment = (comment) => {
         });
     });
 };
+
+export const deleteComment = (commentId) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${commentId}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+    });
+};
