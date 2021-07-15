@@ -3,6 +3,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import CommentList from "./Comments/CommentList";
+import AddNewComment from "./Comments/CommentForm";
 import TagList from "./Tags/TagList";
 import AddNewTag from "./Tags/TagAddForm";
 import TagEditForm from "./Tags/TagEditForm";
@@ -11,6 +13,7 @@ import PostList from './posts/PostList';
 import { PostDetails } from './posts/PostDetails';
 import UserProfileList from "./userProfile/UserProfileList";
 import MyPosts from "./posts/MyPosts";
+import PostTagList from "./posts/PostTagList";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -33,8 +36,12 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/UserProfile">
-          <UserProfileList />
+        <Route path="/posts/tag/:id" exact>
+          {isLoggedIn ? <PostTagList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/UserProfile">  
+        {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}        
         </Route>
 
         <Route path="/login">
@@ -45,6 +52,14 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Register />
         </Route>
 
+        <Route path="/comment/:id" exact>
+          <CommentList />
+        </Route>
+
+        <Route path="/comment/:id/add">
+          <AddNewComment />
+        </Route>
+        
         <Route path="/tag" exact>
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
         </Route>
