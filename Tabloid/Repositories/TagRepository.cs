@@ -45,7 +45,7 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT t.id, distinct t.name FROM Tag t 
+                    cmd.CommandText = @"SELECT DISTINCT t.id, t.name FROM Tag t 
                                         Join PostTag pt on t.id = pt.TagId 
                                         Where pt.PostId = @postId And t.IsDeleted = 0";
                     cmd.Parameters.AddWithValue("@postId", postId);
