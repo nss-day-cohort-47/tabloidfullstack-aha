@@ -22,7 +22,7 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                         SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime,
                                p.Title AS PostTitle, p.Content AS PostContent, p.ImageLocation AS PostImageLocation, p.CreateDateTime AS PostCreateDateTime, p.IsApproved AS PostIsApproved,
-                               up.DisplayName AS UserDisplayName, up.FirstName AS UserFirstName, up.LastName AS UserLastName, up.Email AS UserEmail, up.CreateDateTime AS UserCreateDateTime, up.ImageLocation AS UserImageLocation, up.UserTypeId
+                               up.DisplayName AS UserDisplayName, up.FirebaseUserId, up.FirstName AS UserFirstName, up.LastName AS UserLastName, up.Email AS UserEmail, up.CreateDateTime AS UserCreateDateTime, up.ImageLocation AS UserImageLocation, up.UserTypeId
                         FROM Post p
                         LEFT JOIN Comment c ON p.Id = c.PostId
                         LEFT JOIN UserProfile up ON up.Id = p.UserProfileId
@@ -50,6 +50,7 @@ namespace Tabloid.Repositories
                                 UserProfile = new UserProfile()
                                 {
                                     Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                    FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                                     DisplayName = DbUtils.GetString(reader, "UserDisplayName"),
                                     FirstName = DbUtils.GetString(reader, "UserFirstName"),
                                     LastName = DbUtils.GetString(reader, "UserLastName"),
