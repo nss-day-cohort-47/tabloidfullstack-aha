@@ -35,6 +35,12 @@ namespace Tabloid.Controllers
             }
             return Ok();
         }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _userProfileRepository.Delete(id);
+            return NoContent();
+        }
 
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
