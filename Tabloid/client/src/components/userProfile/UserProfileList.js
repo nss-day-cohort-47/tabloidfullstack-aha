@@ -9,7 +9,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import {GetAllUsers} from "../../modules/userManager"
+import {GetAllUsers} from "../../modules/usersManager"
 import UserProfile from './UserProfile';
 
 export default function UserProfileList() {
@@ -56,7 +56,7 @@ export default function UserProfileList() {
                 <label style={{width: "5em",marginLeft:".5rem"}}>Remove</label>
             </div>
         {users.map((user) => (
-          <UserProfile user={user} key={user.id} />
+          <UserProfile user={user} getUsers={getUsers} key={user.id} />
         ))}
     </div>
             </div>
