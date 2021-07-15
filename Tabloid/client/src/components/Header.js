@@ -17,7 +17,7 @@ export default function Header({ isLoggedIn }) {
   const toggle = () => setIsOpen(!isOpen);
   const { currentUserId } = useContext(UserProfileContext);
 
-  console.log(currentUserId)
+  
   return (
     <div>
       <Navbar color="light" light expand="md">

@@ -40,8 +40,6 @@ namespace Tabloid.Controllers
         [HttpPost]
         public IActionResult AddCategory(Category category)
         {
-            DateTime dateCreated = DateTime.Now;
-
             _categoryRepository.AddCategory(category);
             return CreatedAtAction("Get", new { id = category.Id }, category);
         }
@@ -56,9 +54,33 @@ namespace Tabloid.Controllers
             return NoContent();
         }
 
+        //----------------------------------------------------------------------
+        //GET A CATEGORY BY ID
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var tag = _categoryRepository.GetCategoryById(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+            return Ok(tag);
+        }
 
+        //----------------------------------------------------------------------
+        //EDIT CATEGORY
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Category category)
+        {
+            if (id != category.Id)
+            {
+                return BadRequest();
+            }
 
+            _categoryRepository.EditCategory(category);
+            return Ok(category);
+        }
 
 
 

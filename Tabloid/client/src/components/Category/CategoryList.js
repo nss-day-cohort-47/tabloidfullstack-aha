@@ -38,7 +38,3 @@ export const CategoryList = () => {
 export default CategoryList;
 
 
-// {collections.map(collection =>
-//     <CollectionCard key={collection.id} collection={collection}/>
-//     )
-//   }

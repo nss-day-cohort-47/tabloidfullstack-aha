@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
-import { editCategory, getCategoryById } from "../../modules/categoryManager";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { addCategory } from "../../modules/categoryManager";
 import { Form, FormGroup, Button, Container } from "reactstrap";
 
-const AddNewCategory = () => {
-    const [category, setCategory] = useState({})
-    const { id } = useParams();
+export const AddNewCategory = () => {
+    const [category, setCategory] = useState({
+        name: ""
+    })
 
     const history = useHistory();
-
 
     const handleInputChange = (event) => {
         const newCategory = { ...category }
@@ -21,7 +21,7 @@ const AddNewCategory = () => {
         if (category.name === "") {
             window.alert("Please fill in all fields")
         } else {
-            editCategory(category)
+            addCategory(category)
                 .then(() => history.push('/category'))
         }
 
@@ -30,9 +30,6 @@ const AddNewCategory = () => {
         click.preventDefault()
         history.push('/category')
     }
-    useEffect(()=> {
-        getCategoryById(id).then(setCategory)
-    },[id])
 
     return (
         <Container className="justified-content-center">
@@ -45,7 +42,8 @@ const AddNewCategory = () => {
                         required
                         autoComplete="off"
                         className="form-control"
-                        defaultValue={category.name} />
+                        placeholder="Name"
+                        value={category.name} />
                 </FormGroup>
             </Form>
             <Button className="article-btn"
