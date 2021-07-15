@@ -23,6 +23,7 @@ namespace Tabloid.Repositories
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
+                          WHERE IsDeleted = 0
                     ";
                     var reader = cmd.ExecuteReader();
                     UserProfile userProfile = null;
@@ -66,7 +67,7 @@ namespace Tabloid.Repositories
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                         WHERE FirebaseUserId = @FirebaseuserId";
+                         WHERE FirebaseUserId = @FirebaseuserId AND  IsDeleted = 0";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
 
@@ -99,7 +100,22 @@ namespace Tabloid.Repositories
                 }
             }
         }
-
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update UserProfile 
+                                        set IsDeleted = 1 
+                                        Where Id = @id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteScalar();
+                }
+                conn.Close();
+            }
+        }
         public void Add(UserProfile userProfile)
         {
             using (var conn = Connection)
