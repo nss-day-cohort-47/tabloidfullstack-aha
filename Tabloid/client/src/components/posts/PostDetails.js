@@ -62,13 +62,11 @@ export const PostDetails = () => {
                                 <strong>Category:</strong> {post.category.name}
                             </p>
                         </p>
-                        {currentUserId === post.userProfileId ? (
                             <i
                                 className="fas fa-trash-alt fa-2x"
                                 onClick={handleDelete}
                                 style={{ cursor: 'pointer' }}
-                            ></i>
-                        ) : null}
+                            >sup</i>
                     </div>    
                     
 
@@ -83,3 +81,10 @@ export const PostDetails = () => {
         </div>
     );
 };
+/*{currentUserId === post.userProfileId ? (
+                            <i
+                                className="fas fa-trash-alt fa-2x"
+                                onClick={handleDelete}
+                                style={{ cursor: 'pointer' }}
+                            ></i>
+                        ) : null} */
