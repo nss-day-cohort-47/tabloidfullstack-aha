@@ -3,17 +3,18 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-import CategoryList from "./Category/CategoryList";
-import PostList from './posts/PostList';
-import { PostDetails } from './posts/PostDetails';
-import UserProfileList from "./userProfile/UserProfileList";
+import CommentList from "./Comments/CommentList";
 import TagList from "./Tags/TagList";
+import AddNewTag from "./Tags/TagAddForm";
+import TagEditForm from "./Tags/TagEditForm";
+import CategoryList from "./Category/CategoryList";
+import PostList from "./posts/PostList";
+import { PostDetails } from "./posts/PostDetails";
+import UserProfileList from "./userProfile/UserProfileList";
 import AddNewCategory from "./Category/CategoryAddForm";
 import CategoryEditForm from "./Category/CategoryEditForm";
 
-
 export default function ApplicationViews({ isLoggedIn }) {
-
   return (
     <main>
       <Switch>
@@ -33,8 +34,8 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/UserProfile">          
-          <UserProfileList />
+        <Route path="/UserProfile">
+          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">
@@ -45,7 +46,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <Register />
         </Route>
 
-           <Route path="/category" exact>
+        <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
 
@@ -57,10 +58,21 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/tag">
-          <TagList />
+        <Route path="/comment/:id">
+          <CommentList />
         </Route>
 
+        <Route path="/tag" exact>
+          {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/tag/add">
+          {isLoggedIn ? <AddNewTag /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/tag/edit/:id">
+          {isLoggedIn ? <TagEditForm /> : <Redirect to="/login" />}
+        </Route>
       </Switch>
     </main>
   );
