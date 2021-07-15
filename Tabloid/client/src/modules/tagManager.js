@@ -56,7 +56,7 @@ export const deleteTag = (tagId) => {
 
 export const editTag = (tag) => {
     return getToken().then((token) => {
-        return fetch(`${_apiUrl}/${tag.Id}`, {
+        return fetch(`${_apiUrl}/${tag.id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -65,11 +65,28 @@ export const editTag = (tag) => {
             body: JSON.stringify(tag)
         }).then(resp => {
             if (resp.ok) {
-                return resp.json();
+                return;
             } else if (resp.status === 401) {
                 throw new Error("Unauthorized");
             } else {
                 throw new Error("An unknown error occurred while trying to save a new tag.");
+            }
+        });
+    });
+};
+
+export const getTagById = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }).then(resp => {
+            if (resp.ok) {
+                return resp.json();
+            } else {
+                 throw new Error("An unknown error occurred while trying to get quotes.");
             }
         });
     });
