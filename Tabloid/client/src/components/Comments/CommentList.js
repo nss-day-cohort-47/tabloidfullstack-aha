@@ -3,9 +3,11 @@ import Comment from "./Comment";
 import { useParams, Link } from "react-router-dom";
 import { PostContext } from "../../modules/PostManager";
 import { Button } from "reactstrap";
+import { getAllCommentsByPost } from "../../modules/commentManager";
 
 const CommentList = () => {
     const [post, setPost] = useState({});
+    const [comments, setComments] = useState([]);
     const { getPostById } = useContext(PostContext);
     const { id } = useParams();
     
@@ -13,8 +15,16 @@ const CommentList = () => {
         getPostById(id).then(post => setPost(post));
     }
 
+    const getComments = () => {
+        getAllCommentsByPost(id).then(comments => setComments(comments));
+    }
+
     useEffect(() => {
         getPost();
+    }, [comments]);
+
+    useEffect(() => {
+        getComments();
     }, []);
 
     return (
@@ -24,7 +34,7 @@ const CommentList = () => {
                     </Link>
             <div className="row">
                 {post.comments?.map((comment) => (
-                    <Comment comment={comment} post={post} key={comment.Id} />
+                    <Comment comment={comment} post={post} getComments={getComments} key={comment.Id} />
                 ))}
             </div>
             <Link to={`/comment/${post.id}/add`}>

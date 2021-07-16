@@ -203,7 +203,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            DELETE FROM Comment
+                            UPDATE Comment SET IsDeleted = 1
                             WHERE Id = @id
                         ";
 

@@ -26,13 +26,6 @@ namespace Tabloid.Controllers
             return Ok(_commentRepository.GetCommentsByPost(postId));
         }
 
-        // GET api/<CommentController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST api/<CommentController>
         [HttpPost]
         public IActionResult AddComment(Comment comment)
