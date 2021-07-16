@@ -11,10 +11,7 @@ export const PostDetails = () => {
     const { getPostById, deletePost } = useContext(PostContext);
     const history = useHistory();
     const { currentUserId } = useContext(UserProfileContext);
-<<<<<<< HEAD
     const [isSubscribed, setIsSubscribed] = useState(true)
-=======
->>>>>>> main
 
     useEffect(() => {
         getPostById(id).then(setPost);
