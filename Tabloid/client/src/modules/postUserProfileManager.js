@@ -10,9 +10,21 @@ export function UserProfileProvider(props) {
 
   const userProfile = sessionStorage.getItem("userProfile");
   const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
-
   const [userProfiles, setUserProfiles] = useState([])
+  const [currentUserId, setCurrentUserId] = useState(0);
 
+  const [isFirebaseReady, setIsFirebaseReady] = useState(false);
+  useEffect(() => {
+      firebase.auth().onAuthStateChanged((u) => {
+          setIsFirebaseReady(true);
+      });
+  }, []);
+
+  useEffect(() => {
+      if (isLoggedIn) {
+          setCurrentUserId(JSON.parse(userProfile).id);
+      }
+  }, [userProfile]);
   const getAllUserProfiles = () => {
 
     return getToken().then((token) =>
@@ -25,38 +37,7 @@ export function UserProfileProvider(props) {
     .then(setUserProfiles))
   }
 
-  const [isFirebaseReady, setIsFirebaseReady] = useState(false);
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((u) => {
-      setIsFirebaseReady(true);
-    });
-  }, []);
 
-  const login = (email, pw) => {
-    return firebase.auth().signInWithEmailAndPassword(email, pw)
-      .then((signInResponse) => getUserProfile(signInResponse.user.uid))
-      .then((userProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
-        setIsLoggedIn(true);
-      });
-  };
-
-  const logout = () => {
-    return firebase.auth().signOut()
-      .then(() => {
-        sessionStorage.clear()
-        setIsLoggedIn(false);
-      });
-  };
-
-  const register = (userProfile, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(userProfile.email, password)
-      .then((createResponse) => saveUser({ ...userProfile, firebaseUserId: createResponse.user.uid }))
-      .then((savedUserProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile))
-        setIsLoggedIn(true);
-      });
-  };
 
   const getToken = () => firebase.auth().currentUser.getIdToken();
 
@@ -83,20 +64,10 @@ export function UserProfileProvider(props) {
     .then(res => res.json()))
   }
 
-  const saveUser = (userProfile) => {
-    return getToken().then((token) =>
-      fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userProfile)
-      }).then(resp => resp.json()));
-  };
+
 
   return (
-    <UserProfileContext.Provider value={{ userProfiles, isLoggedIn, login, logout, register, getToken, getUserProfile, getAllUserProfiles, getUserProfileById}}>
+    <UserProfileContext.Provider value={{ userProfiles, getToken, getUserProfile, getAllUserProfiles, getUserProfileById, currentUserId}}>
       {isFirebaseReady
         ? props.children
         : <Spinner className="app-spinner dark" />}
