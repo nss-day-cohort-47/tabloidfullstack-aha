@@ -3,6 +3,7 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { PostContext } from "../../modules/PostManager.js";
 import { UserProfileContext } from '../../modules/postUserProfileManager.js';
 import { getSubscriptionStatus, deleteSubscription, addSubscription } from '../../modules/subscriptManager.js';
+import { deletePostTag } from '../../modules/tagManager.js';
 
 
 export const PostDetails = () => {
@@ -32,9 +33,10 @@ export const PostDetails = () => {
     };
 
     const getSubscription = (postobject) => {
-        if (postobject?.userProfileId) {
+        if (postobject?.userProfileId > 0) {
             getSubscriptionStatus(post.userProfileId)
                 .then(sub => {
+                    
                     setIsSubscribed(sub)
                 })
         }
@@ -46,14 +48,14 @@ export const PostDetails = () => {
         addSubscription(post.userProfileId).then(() => setIsSubscribed(true))
     }
     const handleUnSubscribe = () => {
-        console.log(post.userProfileId)
+        
         deleteSubscription(post.userProfileId).then(() => setIsSubscribed(false))
     }
 
 
     useEffect(() => {
         getSubscription(post)
-    }, [isSubscribed])
+    }, [post])
 
     if (!post) {
         return null;
