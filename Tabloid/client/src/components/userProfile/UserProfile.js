@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardBody } from "reactstrap";
 import { useHistory} from "react-router";
-import {GetAllUsers, DeleteUser} from "../../modules/userManager";
+import {GetAllUsers, DeleteUser, activateUser} from "../../modules/userManager";
 
 export default function UserProfile({ user, getUsers }) {
     const history = useHistory();
@@ -16,6 +16,12 @@ export default function UserProfile({ user, getUsers }) {
                     DeleteUser(user.id).then(()=> getUsers())
                 }
                 break;
+            case 2:
+                    result = window.confirm(`Are you sure you want to ReActivate ${user.fullName}?`);
+                    if (result) {
+                        activateUser(user.id).then(()=> getUsers())
+                    }
+                    break;
             default:
             // do nothing
         }
@@ -27,7 +33,8 @@ export default function UserProfile({ user, getUsers }) {
                 <label style={{width: "12em"}}>{user.fullName} </label>
                 <label style={{width: "12em", marginLeft:".5rem"}}>{user.displayName}</label>
                 <button type="button" onClick={() => handleClick(user, 0)}  style={{width: "5em",marginLeft:".5rem"}}>Edit</button>
-                <button type="button" onClick={() => handleClick(user, 1)} style={{width: "5em",marginLeft:".5rem"}}>Remove</button>
+                {!user.isDeleted && <button type="button" onClick={() => handleClick(user, 1)} style={{width: "5em",marginLeft:".5rem"}}>Remove</button>}
+                {user.isDeleted && <button type="button" onClick={() => handleClick(user, 2)} style={{width: "5em",marginLeft:".5rem"}}>Activate</button>}
             </div>
         </CardBody>
     </Card>);

@@ -54,6 +54,13 @@ namespace Tabloid.Controllers
             }
             return Ok();
         }
+        [HttpDelete("activate/{id}")]
+        public IActionResult Activate(int id)
+        {
+            _userProfileRepository.Activate(id);
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
