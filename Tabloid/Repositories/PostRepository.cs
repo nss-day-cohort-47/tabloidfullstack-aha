@@ -63,7 +63,7 @@ namespace Tabloid.Repositories
                     LEFT JOIN UserProfile up on up.Id = p.UserProfileId
                     LEFT JOIN Comment com on com.PostId = p.Id
                     LEFT JOIN UserProfile usp on usp.Id = com.UserProfileId
-                    WHERE p.Id = @Id AND com.IsDeleted = 0";
+                    WHERE p.Id = @Id AND p.isDeleted = 0";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -138,7 +138,6 @@ namespace Tabloid.Repositories
             }
         }
 
-        // Need to update the PublishedDateTime and isApproved when we start the admin approval ticket.
         public void AddPost(Post post)
         {
             using(var conn = Connection) 
@@ -201,8 +200,8 @@ namespace Tabloid.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Post SET IsDeleted=@IsDeleted WHERE Id=@Id";
-                    cmd.Parameters.AddWithValue("@IsDeleted", 1);
+                    cmd.CommandText = @"UPDATE Post SET isDeleted=@isDeleted WHERE Id=@Id";
+                    cmd.Parameters.AddWithValue("@isDeleted", 1);
                     cmd.Parameters.AddWithValue("@Id", postId);
 
                     cmd.ExecuteNonQuery();
