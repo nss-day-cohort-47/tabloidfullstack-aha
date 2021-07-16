@@ -70,7 +70,7 @@ namespace Tabloid.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            UPDATE Category SET IsDeleted = 1
+                            UPDATE Category SET IsDeleted = 1, Name = 'General'
                             WHERE Id = @id
                         ";
 

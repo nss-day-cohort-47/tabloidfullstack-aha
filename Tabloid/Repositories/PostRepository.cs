@@ -63,7 +63,7 @@ namespace Tabloid.Repositories
                     LEFT JOIN UserProfile up on up.Id = p.UserProfileId
                     LEFT JOIN Comment com on com.PostId = p.Id
                     LEFT JOIN UserProfile usp on usp.Id = com.UserProfileId
-                    WHERE p.Id = @Id";
+                    WHERE p.Id = @Id AND com.IsDeleted = 0";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -293,7 +293,7 @@ namespace Tabloid.Repositories
           \_/ |  |   './ _     _  \.'
                '-'    | /       \ |
                       |  .-. .-.  |
-                      \ / o| |o \ /
+                      \ / x| |x \ /
                        |   / \   |    
                       / `^`   `^` \ I'm still here don't worry
                      /             \

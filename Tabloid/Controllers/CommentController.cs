@@ -26,13 +26,6 @@ namespace Tabloid.Controllers
             return Ok(_commentRepository.GetCommentsByPost(postId));
         }
 
-        // GET api/<CommentController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST api/<CommentController>
         [HttpPost]
         public IActionResult AddComment(Comment comment)
@@ -49,8 +42,10 @@ namespace Tabloid.Controllers
 
         // DELETE api/<CommentController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _commentRepository.DeleteComment(id);
+            return NoContent();
         }
     }
 }
