@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useHistory, Link } from "react-router-dom";
 import { login } from "../modules/authManager";
+import "./Login.css";
 
 export default function Login() {
   const history = useHistory();
@@ -17,6 +18,7 @@ export default function Login() {
   };
 
   return (
+    <div className="container-login">
     <Form onSubmit={loginSubmit}>
       <fieldset>
         <FormGroup>
@@ -35,5 +37,6 @@ export default function Login() {
         </em>
       </fieldset>
     </Form>
+    </div>
   );
 }
