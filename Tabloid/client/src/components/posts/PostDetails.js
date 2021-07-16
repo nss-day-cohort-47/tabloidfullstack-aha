@@ -88,18 +88,18 @@ export const PostDetails = () => {
 
                         </p>
                         <>
-                            <i
+                            <button
                                 className="fas fa-trash-alt fa-2x"
                                 onClick={handleDelete}
                                 style={{ cursor: 'pointer' }}
-                            >Sup</i>
-                            <i
+                            >Delete</button>
+                            <button
                                 className="far fa-edit fa-2x"
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                     history.push(`/edit/${post.id}`);
                                 }}
-                            >Edit</i>
+                            >Edit</button>
                         </>
                     </div>
 
