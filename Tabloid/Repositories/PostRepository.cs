@@ -63,7 +63,7 @@ namespace Tabloid.Repositories
                     LEFT JOIN UserProfile up on up.Id = p.UserProfileId
                     LEFT JOIN Comment com on com.PostId = p.Id
                     LEFT JOIN UserProfile usp on usp.Id = com.UserProfileId
-                    WHERE p.Id = @Id";
+                    WHERE p.Id = @Id AND com.IsDeleted = 0";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
@@ -147,9 +147,9 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Post (Title, Content, ImageLocation, CreateDateTime, PublishDateTime, IsApproved, CategoryId, UserProfileId)
+                        INSERT INTO Post (Title, Content, ImageLocation, CreateDateTime, PublishDateTime, IsApproved, CategoryId, UserProfileId, isDeleted)
                         OUTPUT INSERTED.ID
-                        VALUES (@Title, @Content, @ImageLocation, @CreateDateTime, @PublishDateTime, @IsApproved, @CategoryId, @UserProfileId)";
+                        VALUES (@Title, @Content, @ImageLocation, @CreateDateTime, @PublishDateTime, @IsApproved, @CategoryId, @UserProfileId, @isDeleted)";
 
                     DbUtils.AddParameter(cmd, "@Title", post.Title);
                     DbUtils.AddParameter(cmd, "@Content", post.Content);
@@ -159,7 +159,7 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@IsApproved", post.IsApproved);
                     DbUtils.AddParameter(cmd, "@CategoryId", post.CategoryId);
                     DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
-
+                    DbUtils.AddParameter(cmd, "@isDeleted", post.isDeleted);
                     post.Id = (int)cmd.ExecuteScalar();
                 }
             }
@@ -293,7 +293,7 @@ namespace Tabloid.Repositories
           \_/ |  |   './ _     _  \.'
                '-'    | /       \ |
                       |  .-. .-.  |
-                      \ / o| |o \ /
+                      \ / x| |x \ /
                        |   / \   |    
                       / `^`   `^` \ I'm still here don't worry
                      /             \

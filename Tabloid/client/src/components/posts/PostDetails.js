@@ -11,7 +11,10 @@ export const PostDetails = () => {
     const { getPostById, deletePost } = useContext(PostContext);
     const history = useHistory();
     const { currentUserId } = useContext(UserProfileContext);
+<<<<<<< HEAD
     const [isSubscribed, setIsSubscribed] = useState(true)
+=======
+>>>>>>> main
 
     useEffect(() => {
         getPostById(id).then(setPost);
@@ -42,7 +45,7 @@ export const PostDetails = () => {
     console.log(post?.userProfileId)
 
     const handleSubscribe = () => {
-  
+
         addSubscription(post.userProfileId).then(() => setIsSubscribed(true))
     }
     const handleUnSubscribe = () => {
@@ -76,21 +79,31 @@ export const PostDetails = () => {
                     >
                         <p>
                             <strong>Author:</strong>{' '}
-                            {post.userProfile.displayName}
+                            {post.userProfile?.displayName}
                         </p>
                         <p>
                             <strong>Publication Date:</strong> {handleDate()}
                         </p>
 
                         <p>
-                            <strong>Category:</strong> {post.category.name}
-                        </p>
 
-                        <i
-                            className="fas fa-trash-alt fa-2x"
-                            onClick={handleDelete}
-                            style={{ cursor: 'pointer' }}
-                        >sup</i>
+                            <strong>Category:</strong> {post.category?.name}
+
+                        </p>
+                        <>
+                            <i
+                                className="fas fa-trash-alt fa-2x"
+                                onClick={handleDelete}
+                                style={{ cursor: 'pointer' }}
+                            >Sup</i>
+                            <i
+                                className="far fa-edit fa-2x"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                    history.push(`/edit/${post.id}`);
+                                }}
+                            >Edit</i>
+                        </>
                     </div>
 
 
@@ -101,8 +114,8 @@ export const PostDetails = () => {
                     {/* tags go here */}
                     <button onClick={() => history.push(`/posts/tag/${post.id}`)} >Manage Tags</button>
                     {isSubscribed ? <button onClick={handleUnSubscribe} >UnSubscribe</button> :
-                    <button onClick={handleSubscribe} >Subscribe</button> 
-                        }
+                        <button onClick={handleSubscribe} >Subscribe</button>
+                    }
                 </div>
             </div>
         </div>

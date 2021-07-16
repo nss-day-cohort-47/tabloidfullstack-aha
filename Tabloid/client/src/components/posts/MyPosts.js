@@ -12,11 +12,9 @@ const MyPosts = () => {
     return getAllUserPosts().then(posts => setPosts(posts))
   }
 
-  console.log(posts)
   useEffect(() => {
     fetchUserPosts();
   }, []);
-console.log()
   return (
     <>
       <h1>My Posts</h1>
