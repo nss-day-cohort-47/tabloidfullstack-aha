@@ -92,7 +92,7 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
 						SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime,
-                               p.Title AS PostTitle, p.Content AS PostContent, p.ImageLocation AS PostImageLocation, p.CreateDateTime AS PostCreateDateTime, p.IsApproved AS PostIsApproved, p.CatergoryId AS PostCategoryId,
+                               p.Title AS PostTitle, p.Content AS PostContent, p.ImageLocation AS PostImageLocation, p.CreateDateTime AS PostCreateDateTime, p.IsApproved AS PostIsApproved,
                                up.DisplayName AS UserDisplayName, up.FirstName AS UserFirstName, up.LastName AS UserLastName, up.Email AS UserEmail, up.CreateDateTime AS UserCreateDateTime, up.ImageLocation AS UserImageLocation, up.UserTypeId
                         FROM Comment c
                         LEFT JOIN Post p ON p.Id = c.PostId
@@ -120,7 +120,6 @@ namespace Tabloid.Repositories
                                 Content = DbUtils.GetString(reader, "PostContent"),
                                 ImageLocation = DbUtils.GetString(reader, "PostImageLocation"),
                                 CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
-                                PublishDateTime = DbUtils.GetDateTime(reader, "PostPublishDateTime"),
                                 IsApproved = reader.GetBoolean(reader.GetOrdinal("PostIsApproved"))
                             },
                             UserProfile = new UserProfile()
@@ -182,12 +181,13 @@ namespace Tabloid.Repositories
                             UPDATE Comment
                             SET 
                                 Subject = @subject, 
-                                Content = @content                            
-                            WHERE Id = @id
+                                Content = @content                         
+                            WHERE Id = @id AND PostId = @postId
                     ";
                     cmd.Parameters.AddWithValue("@subject", comment.Subject);
                     cmd.Parameters.AddWithValue("@content", comment.Content);
                     cmd.Parameters.AddWithValue("@id", comment.Id);
+                    cmd.Parameters.AddWithValue("@postId", comment.PostId);
 
                     cmd.ExecuteNonQuery();
                 }
