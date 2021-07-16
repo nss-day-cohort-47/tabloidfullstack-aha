@@ -45,13 +45,15 @@ const _apiUrl = "/api/userprofile";
       });
     });
   }
-  export const editUser= () => {
+  export const checkUnique= (user) => {
     return getToken().then((token) => {
-      return fetch(_apiUrl + '/GetAll', {
-        method: "GET",
+      return fetch(_apiUrl + '/GetUnique', {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
       }).then(resp => {
         if (resp.ok) {
           return resp.json();
@@ -59,6 +61,27 @@ const _apiUrl = "/api/userprofile";
           throw new Error("An unknown error occurred while trying to get quotes.");
         }
       });
+    });
+  }
+
+  export const editUser= (user) => {
+    return getToken().then((token) => {
+      return fetch(_apiUrl + `/${user.id}`, {
+        method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }).then(resp => {
+            if (resp.ok) {
+                return;
+            } else if (resp.status === 401) {
+                throw new Error("Unauthorized");
+            } else {
+                throw new Error("An unknown error occurred while trying to edit a user.");
+            }
+        });
     });
   }
   

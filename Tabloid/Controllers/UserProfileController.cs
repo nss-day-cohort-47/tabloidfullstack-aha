@@ -14,6 +14,12 @@ namespace Tabloid.Controllers
         {
             _userProfileRepository = userProfileRepository;
         }
+        [HttpPost("GetUnique")]
+        public IActionResult GetUnique(UserProfile user)
+        {
+            UserProfile retValue = _userProfileRepository.CheckUnique(user);
+            return Ok(retValue);
+        }
         [HttpGet("GetAll")]
         public IActionResult GetAllUsers()
         {
@@ -53,6 +59,17 @@ namespace Tabloid.Controllers
         {
             _userProfileRepository.Delete(id);
             return NoContent();
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile user)
+        {
+            if (id != user.Id)
+            {
+                return BadRequest();
+            }
+
+            _userProfileRepository.Edit(user);
+            return Ok(user);
         }
 
         [HttpPost]

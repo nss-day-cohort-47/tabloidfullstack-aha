@@ -9,6 +9,61 @@ namespace Tabloid.Repositories
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
 
+        public UserProfile CheckUnique(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "Select count(*) From UserProfile where Email = @email and Id != @id";
+                    cmd.Parameters.AddWithValue("@email", user.Email);
+                    cmd.Parameters.AddWithValue("@id", user.Id);
+                    var value = cmd.ExecuteScalar();
+                    if((int)value > 0)
+                    {
+                        user.Email = user.Email + " !!Exists";
+                    }
+                    cmd.CommandText = "Select count(*) From UserProfile where DisplayName = @displayName and Id != @id";
+                    cmd.Parameters.AddWithValue("@displayName", user.DisplayName);
+                    var dnValue = cmd.ExecuteScalar();
+                    if ((int)dnValue > 0)
+                    {
+                        user.DisplayName = user.DisplayName + " !!Exists";
+                    }
+                }
+                
+            }
+            return user;
+        }
+
+        public void Edit(UserProfile toEdit)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update UserProfile 
+                                        set FirstName = @firstName,
+                                            LastName = @lastName,
+                                            Email = @email,
+                                            DisplayName = @displayName,
+                                            ImageLocation = @imageLocation,
+                                            UserTypeId = @userTypeId
+                                        where Id = @id";
+                    cmd.Parameters.AddWithValue("@firstName", toEdit.FirstName);
+                    cmd.Parameters.AddWithValue("@lastName", toEdit.LastName);
+                    cmd.Parameters.AddWithValue("@email", toEdit.Email);
+                    cmd.Parameters.AddWithValue("@imageLocation", toEdit.ImageLocation);
+                    cmd.Parameters.AddWithValue("@displayName", toEdit.DisplayName);
+                    cmd.Parameters.AddWithValue("@userTypeId", toEdit.UserTypeId);
+                    cmd.Parameters.AddWithValue("@id", toEdit.Id);
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
         public List<UserProfile> GetAllUsers()
         {
             List<UserProfile> AllUsers = new List<UserProfile>();
