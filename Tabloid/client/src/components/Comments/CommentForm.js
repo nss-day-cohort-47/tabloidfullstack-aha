@@ -3,11 +3,11 @@ import { useHistory, useParams } from "react-router-dom";
 import { addComment } from "../../modules/commentManager";
 import { Form, FormGroup, Button, Container } from "reactstrap";
 
-const AddNewComment = () => {
+const AddNewComment = ({ post }) => {
     const { id } = useParams();
     const [comment, setComment] = useState({
         postId: id,
-        userProfileId: 1,
+        userProfileId: post.comment.userProfileId,
         subject: "",
         content: ""
     });
