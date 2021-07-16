@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Security.Claims;
 using Tabloid.Models;
 using Tabloid.Repositories;
-using System.Security.Claims;
-
 
 namespace Tabloid.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PostsController : ControllerBase
@@ -52,10 +53,11 @@ namespace Tabloid.Controllers
         [HttpPost]
         public IActionResult AddPost(Post post)
         {
+            var currentUser = GetCurrentUserProfile2();
+            post.UserProfileId = currentUser.Id;
             DateTime dateCreated = DateTime.Now;
 
             post.CreateDateTime = dateCreated;
-  //          post.PublishDateTime = dateCreated;
             post.IsApproved = true;
 
             _postRepository.AddPost(post);
@@ -65,6 +67,11 @@ namespace Tabloid.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Post post)
         {
+            var currentUser = GetCurrentUserProfile2();
+            if (post.UserProfileId != currentUser.Id)
+            {
+                return Unauthorized();
+            }
             if (id != post.Id)
             {
                 return BadRequest();
@@ -93,6 +100,11 @@ namespace Tabloid.Controllers
                 var posts = _postRepository.GetAllUserPosts(user);
                 return Ok(posts);
             }
+        }
+        private UserProfile GetCurrentUserProfile2()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
 
         private string GetCurrentUserProfile()
