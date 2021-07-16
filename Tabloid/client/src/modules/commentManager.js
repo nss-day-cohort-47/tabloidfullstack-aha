@@ -46,3 +46,41 @@ export const deleteComment = (commentId) => {
         });
     });
 };
+
+export const editComment = (comment) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${comment.id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(comment)
+        }).then(res => {
+            if (res.ok) {
+                return;
+            } else if (res.status === 401) {
+                throw new Error("Unauthorized");
+            } else {
+                throw new Error("An unknown error occurred while trying to edit your comment.");
+            }
+        })
+    })
+}
+
+export const getCommentById = (id) => {
+    return getToken().then((token) => {
+        return fetch(`${baseUrl}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("An unknown error occurred while trying to get the comment.");
+            }
+        });
+    });
+};
