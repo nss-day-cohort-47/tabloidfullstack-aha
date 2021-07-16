@@ -12,7 +12,7 @@ namespace Tabloid.Repositories
 
         Comment GetCommentById(int id);
 
-        void AddComment(Comment comment);
+        void AddComment(int userProfileId, Comment comment);
 
         void UpdateComment(Comment comment);
 
