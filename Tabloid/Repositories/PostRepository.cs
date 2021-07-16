@@ -293,7 +293,7 @@ namespace Tabloid.Repositories
           \_/ |  |   './ _     _  \.'
                '-'    | /       \ |
                       |  .-. .-.  |
-                      \ / o| |o \ /
+                      \ / x| |x \ /
                        |   / \   |    
                       / `^`   `^` \ I'm still here don't worry
                      /             \
