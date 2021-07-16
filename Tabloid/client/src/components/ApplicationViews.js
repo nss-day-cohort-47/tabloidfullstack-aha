@@ -18,7 +18,7 @@ import AddNewCategory from "./Category/CategoryAddForm";
 import CategoryEditForm from "./Category/CategoryEditForm";
 import PostTagList from "./posts/PostTagList";
 import EditComment from "./Comments/CommentEditForm";
-
+import PostForm from "./posts/PostForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -40,17 +40,24 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/create" exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/edit/:id" exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/userprofile" exact>
           {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/userprofile/edit/:id">
           {isLoggedIn ? <UserProfileForm /> : <Redirect to="/login" />}
-
-          <Route path="/posts/tag/:id" exact>
+        </Route>
+          
+        <Route path="/posts/tag/:id" exact>
             {isLoggedIn ? <PostTagList /> : <Redirect to="/login" />}
-          </Route>
-
         </Route>
 
         <Route path="/login">
@@ -60,7 +67,6 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/register">
           <Register />
         </Route>
-
 
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
