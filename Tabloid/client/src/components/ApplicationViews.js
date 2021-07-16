@@ -82,7 +82,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <AddNewComment /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/comment/:id/edit/:id">
+        <Route path="/comment/edit/:id">
           {isLoggedIn ? <EditComment /> : <Redirect to="/login" />}
         </Route>
 

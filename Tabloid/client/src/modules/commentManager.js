@@ -58,7 +58,7 @@ export const editComment = (comment) => {
             body: JSON.stringify(comment)
         }).then(res => {
             if (res.ok) {
-                return;
+                return res;
             } else if (res.status === 401) {
                 throw new Error("Unauthorized");
             } else {
@@ -70,7 +70,7 @@ export const editComment = (comment) => {
 
 export const getCommentById = (id) => {
     return getToken().then((token) => {
-        return fetch(`${baseUrl}/${id}`, {
+        return fetch(`${baseUrl}/comment/${id}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`,

@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { editComment, getCommentById } from "../../modules/commentManager";
 import { Form, FormGroup, Button, Container } from "reactstrap";
 
-const EditComment = ({ post }) => {
+const EditComment = () => {
     const [comment, setComment] = useState({});
     const { id } = useParams();
 
@@ -18,17 +18,17 @@ const EditComment = ({ post }) => {
 
     const handleSaveEvent = (evt) => {
         evt.preventDefault();
-        if (comment.subject === "" || commment.content === "") {
+        if (comment.subject === "" || comment.content === "") {
             window.alert("Please fill in all fields")
         } else {
             editComment(comment)
-                .then(() => history.push(`/comment/${post.id}`));
+                .then(() => history.push(`/comment/${comment.postId}`));
         };
     };
 
     const handleCancelSave = (evt) => {
         evt.preventDefault();
-        history.push (`/comment/${post.id}`);
+        history.push(`/comment/${comment.postId}`);
     };
 
     useEffect(() => {
@@ -56,7 +56,7 @@ const EditComment = ({ post }) => {
                         required
                         autoComplete="off"
                         className="form-control"
-                        deaultValue={comment.content} />
+                        defaultValue={comment.content} />
                 </FormGroup>
             </Form>
             <Button className="article-btn"
