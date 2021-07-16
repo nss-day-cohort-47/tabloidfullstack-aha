@@ -14,7 +14,15 @@ namespace Tabloid.Utils
         /// <param name="reader">A SqlDataReader that has not exhausted it's result set.</param>
         /// <param name="column">The name of the column from the result set refereed to by the reader.</param>
         /// <returns>The value of the given column or null.</returns>
+        public static bool GetBoolean(SqlDataReader reader, string column)
+        {
+            var ordinal = reader.GetOrdinal(column);
+            return reader.GetBoolean(ordinal);
+        }
+        
         public static string GetString(SqlDataReader reader, string column)
+
+
         {
             var ordinal = reader.GetOrdinal(column);
             if (reader.IsDBNull(ordinal))

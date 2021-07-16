@@ -5,6 +5,7 @@ namespace Tabloid.Repositories
 {
     public interface IUserProfileRepository
     {
+        void Activate(int id);
         void Add(UserProfile userProfile);
         UserProfile CheckUnique(UserProfile user);
         void Delete(int id);
