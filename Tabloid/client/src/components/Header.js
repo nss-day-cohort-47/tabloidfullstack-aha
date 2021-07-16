@@ -11,7 +11,8 @@ import {
 } from 'reactstrap';
 import { logout } from '../modules/authManager';
 import { UserProfileContext } from '../modules/postUserProfileManager';
-
+import thing from "./lb.png"
+import "./Hello.css";
 
 export default function Header({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ export default function Header({ isLoggedIn }) {
   return (
     <div>
       <Navbar color="light" light expand="md">
+        <img src={thing}  className="small" alt="user img"/>
         <NavbarBrand tag={RRNavLink} to="/">Tabloid</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
