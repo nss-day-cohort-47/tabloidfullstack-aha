@@ -15,7 +15,7 @@ export const PostDetails = () => {
     useEffect(() => {
         getPostById(id).then(setPost);
     }, []);
-    console.log(currentUserId)
+
     const handleDelete = () => {
         if (window.confirm('Are you sure?')) {
             deletePost(post.id).then(() => {
