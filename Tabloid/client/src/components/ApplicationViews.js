@@ -17,7 +17,8 @@ import MyPosts from "./posts/MyPosts";
 import AddNewCategory from "./Category/CategoryAddForm";
 import CategoryEditForm from "./Category/CategoryEditForm";
 import PostTagList from "./posts/PostTagList";
-
+import EditComment from "./Comments/CommentEditForm";
+import PostForm from "./posts/PostForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -39,17 +40,24 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/create" exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/edit/:id" exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/userprofile" exact>
-        {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
+          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/userprofile/edit/:id">
           {isLoggedIn ? <UserProfileForm /> : <Redirect to="/login" />}
-
+        </Route>
+          
         <Route path="/posts/tag/:id" exact>
-          {isLoggedIn ? <PostTagList /> : <Redirect to="/login" />}
-        </Route>       
-
+            {isLoggedIn ? <PostTagList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">
@@ -59,7 +67,6 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/register">
           <Register />
         </Route>
-
 
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
@@ -73,17 +80,17 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
         </Route>
 
-       
-
-
         <Route path="/comment/:id" exact>
-          <CommentList />
+          {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/comment/:id/add">
-          <AddNewComment />
+          {isLoggedIn ? <AddNewComment /> : <Redirect to="/login" />}
         </Route>
-        
+
+        <Route path="/comment/edit/:id">
+          {isLoggedIn ? <EditComment /> : <Redirect to="/login" />}
+        </Route>
 
         <Route path="/tag" exact>
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}

@@ -34,6 +34,31 @@ export const PostManager = (props) => {
             )
             .then((res) => res.json());
     };
+    const addPost = (post) => {
+        return getToken().then((token) =>
+            fetch('/api/posts', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+        );
+    };
+
+    const updatePost = (post) => {
+        return getToken().then((token) =>
+            fetch(`/api/posts/${post.id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(post),
+            })
+        );
+    };
 
     
     const getPostsByUserProfileId = (id) => {
@@ -60,7 +85,7 @@ export const PostManager = (props) => {
         };
         return (
             <PostContext.Provider
-            value={{ posts, getAllPosts, getPostById, getPostsByUserProfileId, deletePost }}
+            value={{ posts, getAllPosts, getPostById, getPostsByUserProfileId, deletePost, addPost, updatePost }}
             >
             {props.children}
         </PostContext.Provider>
