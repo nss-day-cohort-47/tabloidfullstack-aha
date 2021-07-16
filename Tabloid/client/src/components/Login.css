@@ -1,8 +1,8 @@
 .container-login{
     margin-right: auto;
     margin-left: auto;
-    width: 35% !important;
-    min-width: 20em;
+    
+    width: 20em;
     height: 25%;
     padding: 1em;
     padding-top: .5em;
@@ -15,8 +15,7 @@
     margin-right: auto;
     margin-left: auto;
     padding: 1em;
-    width: 40%;
-    min-width: 20em;
+    width: 20em;
     border-radius: .5em;
     background-color: rgb(199, 234, 255);
     margin-top: 5em;
@@ -30,3 +29,7 @@
     
     margin-left: 5.75em;
 }
+
+#disabledSelect {
+    visibility: hidden;
+  }
