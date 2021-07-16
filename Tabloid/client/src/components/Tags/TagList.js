@@ -19,8 +19,9 @@ const TagList = () => {
 
     const getTags = () => {
         getAllTags().then(taglist => {setTags(taglist)
-        console.log(taglist)});
+        });
     }
+    
 
     useEffect(()=> {
         getTags();

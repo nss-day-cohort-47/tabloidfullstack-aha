@@ -11,5 +11,6 @@ namespace Tabloid.Repositories
         void AddPost(Post post);
         void UpdatePost(Post post);
         void DeletePost(int id);
+        public List<Post> GetAllUserPosts(string FirebaseUserId);
     }
 }
