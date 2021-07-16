@@ -19,7 +19,7 @@ export const PostDetails = () => {
     const handleDelete = () => {
         if (window.confirm('Are you sure?')) {
             deletePost(post.id).then(() => {
-                history.push(`/posts/myposts/${currentUserId}`);
+                history.push(`/posts/`);
             });
         }
     };
