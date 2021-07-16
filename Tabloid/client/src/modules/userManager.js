@@ -37,6 +37,8 @@ export const DeleteUser = (id) => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"
       },
+    }).then(resp =>{
+      if(resp.status === 666)alert("Unable to remove the last Admin");
     });
   });
 }
