@@ -5,6 +5,7 @@
     min-width: 20em;
     height: 25%;
     padding: 1em;
+    padding-top: .5em;
     border-radius: .5em;
     background-color: rgb(199, 234, 255);
     margin-top: 15em;
@@ -19,4 +20,13 @@
     border-radius: .5em;
     background-color: rgb(199, 234, 255);
     margin-top: 5em;
+}
+
+.container-login img{
+    height: 100px;
+    width:100px;
+    border-radius: 50%;
+    margin-top: -5em;
+    
+    margin-left: 5.75em;
 }
