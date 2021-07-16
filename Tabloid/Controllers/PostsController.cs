@@ -55,7 +55,7 @@ namespace Tabloid.Controllers
             DateTime dateCreated = DateTime.Now;
 
             post.CreateDateTime = dateCreated;
-            post.PublishDateTime = dateCreated;
+  //          post.PublishDateTime = dateCreated;
             post.IsApproved = true;
 
             _postRepository.AddPost(post);

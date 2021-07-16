@@ -11,12 +11,11 @@ export const PostDetails = () => {
     const { getPostById, deletePost } = useContext(PostContext);
     const history = useHistory();
     const { currentUserId } = useContext(UserProfileContext);
-    console.log(PostContext);
 
     useEffect(() => {
         getPostById(id).then(setPost);
     }, []);
-
+    console.log(currentUserId)
     const handleDelete = () => {
         if (window.confirm('Are you sure?')) {
             deletePost(post.id).then(() => {
@@ -52,22 +51,31 @@ export const PostDetails = () => {
                     >
                         <p>
                             <strong>Author:</strong>{' '}
-                            {post.userProfile.displayName}
+                            {post.userProfile?.displayName}
                         </p>
                         <p>
                             <strong>Publication Date:</strong> {handleDate()}
                         </p>
                         <p>
                             <p>
-                                <strong>Category:</strong> {post.category.name}
+                                <strong>Category:</strong> {post.category?.name}
                             </p>
                         </p>
+                            <>
                             <i
                                 className="fas fa-trash-alt fa-2x"
                                 onClick={handleDelete}
                                 style={{ cursor: 'pointer' }}
-                            >sup</i>
-                    </div>    
+                            >Sup</i>
+                            <i
+                                className="far fa-edit fa-2x"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                    history.push(`/edit/${post.id}`);
+                                }}
+                            >Edit</i>
+                        </>
+                </div>
                     
 
                     <p>{post.content}</p>
