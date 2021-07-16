@@ -23,10 +23,6 @@ const CommentList = () => {
         getPost();
     }, [comments]);
 
-    useEffect(() => {
-        getComments();
-    }, []);
-
     return (
         <div className="container">
             <Link to={`/posts/${post.id}`}>
