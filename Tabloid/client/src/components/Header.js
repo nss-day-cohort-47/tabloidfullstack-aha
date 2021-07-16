@@ -12,12 +12,13 @@ import {
 import { logout } from '../modules/authManager';
 import { UserProfileContext } from '../modules/postUserProfileManager';
 
+
 export default function Header({ isLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const { currentUserId } = useContext(UserProfileContext);
 
-  console.log(currentUserId)
+
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -33,8 +34,8 @@ export default function Header({ isLoggedIn }) {
                 <NavItem>
                   <NavLink tag={RRNavLink} to="/">Home</NavLink>
                 </NavItem>
+                
                 <NavItem>
-
                   <NavLink tag={RRNavLink} to="/category">Category Management</NavLink>
                 </NavItem>
 
@@ -48,7 +49,7 @@ export default function Header({ isLoggedIn }) {
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    tag={RRNavLink} to={`/posts/myposts/${currentUserId}`}>
+                    tag={RRNavLink} to={`/posts/myposts/`}>
                     My Posts
                   </NavLink>
                 </NavItem>

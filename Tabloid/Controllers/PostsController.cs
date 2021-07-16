@@ -1,11 +1,9 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tabloid.Models;
 using Tabloid.Repositories;
+using System.Security.Claims;
+
 
 namespace Tabloid.Controllers
 {
@@ -14,10 +12,12 @@ namespace Tabloid.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
 
-        public PostsController(IPostRepository postRepository)
+        public PostsController(IPostRepository postRepository, IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
 
@@ -80,5 +80,35 @@ namespace Tabloid.Controllers
             _postRepository.DeletePost(id);
             return NoContent();
         }
+        [HttpGet("GetAllUserPosts")]
+        public IActionResult GetAllUserPosts()
+        {
+            var user = GetCurrentUserProfile();
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var posts = _postRepository.GetAllUserPosts(user);
+                return Ok(posts);
+            }
+        }
+
+        private string GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (firebaseUserId != null)
+            {
+                
+                return firebaseUserId;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
+
