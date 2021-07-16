@@ -29,4 +29,60 @@ const _apiUrl = "/api/userprofile";
     });
     });
   }
+  export const getUserById = (id) => {
+    return getToken().then((token) => {
+      return fetch(_apiUrl + `/GetUser/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("An unknown error occurred while trying to get quotes.");
+        }
+      });
+    });
+  }
+  export const checkUnique= (user) => {
+    return getToken().then((token) => {
+      return fetch(_apiUrl + '/GetUnique', {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+      }).then(resp => {
+        if (resp.ok) {
+          return resp.json();
+        } else {
+          throw new Error("An unknown error occurred while trying to get quotes.");
+        }
+      });
+    });
+  }
+
+  export const editUser= (user) => {
+    return getToken().then((token) => {
+      return fetch(_apiUrl + `/${user.id}`, {
+        method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }).then(resp => {
+            if (resp.ok) {
+                return;
+            } else if (resp.status === 401) {
+                throw new Error("Unauthorized");
+            } else {
+                throw new Error("An unknown error occurred while trying to edit a user.");
+            }
+        });
+    });
+  }
+  
 

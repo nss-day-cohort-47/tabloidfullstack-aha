@@ -9,6 +9,61 @@ namespace Tabloid.Repositories
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
 
+        public UserProfile CheckUnique(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "Select count(*) From UserProfile where Email = @email and Id != @id";
+                    cmd.Parameters.AddWithValue("@email", user.Email);
+                    cmd.Parameters.AddWithValue("@id", user.Id);
+                    var value = cmd.ExecuteScalar();
+                    if((int)value > 0)
+                    {
+                        user.Email = user.Email + " !!Exists";
+                    }
+                    cmd.CommandText = "Select count(*) From UserProfile where DisplayName = @displayName and Id != @id";
+                    cmd.Parameters.AddWithValue("@displayName", user.DisplayName);
+                    var dnValue = cmd.ExecuteScalar();
+                    if ((int)dnValue > 0)
+                    {
+                        user.DisplayName = user.DisplayName + " !!Exists";
+                    }
+                }
+                
+            }
+            return user;
+        }
+
+        public void Edit(UserProfile toEdit)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update UserProfile 
+                                        set FirstName = @firstName,
+                                            LastName = @lastName,
+                                            Email = @email,
+                                            DisplayName = @displayName,
+                                            ImageLocation = @imageLocation,
+                                            UserTypeId = @userTypeId
+                                        where Id = @id";
+                    cmd.Parameters.AddWithValue("@firstName", toEdit.FirstName);
+                    cmd.Parameters.AddWithValue("@lastName", toEdit.LastName);
+                    cmd.Parameters.AddWithValue("@email", toEdit.Email);
+                    cmd.Parameters.AddWithValue("@imageLocation", toEdit.ImageLocation);
+                    cmd.Parameters.AddWithValue("@displayName", toEdit.DisplayName);
+                    cmd.Parameters.AddWithValue("@userTypeId", toEdit.UserTypeId);
+                    cmd.Parameters.AddWithValue("@id", toEdit.Id);
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
         public List<UserProfile> GetAllUsers()
         {
             List<UserProfile> AllUsers = new List<UserProfile>();
@@ -53,7 +108,51 @@ namespace Tabloid.Repositories
                 }
             }
         }
-            
+
+        public UserProfile GetUserById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                         SELECT up.Id, Up.FirebaseUserId, up.FirstName, up.LastName, up.DisplayName, 
+                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,
+                               ut.Name AS UserTypeName
+                          FROM UserProfile up
+                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
+                          WHERE IsDeleted = 0 And up.Id = @id
+                    ";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    var reader = cmd.ExecuteReader();
+                    UserProfile userProfile = null;
+                    while (reader.Read())
+                    {
+                        userProfile = new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
+                            FirstName = DbUtils.GetString(reader, "FirstName"),
+                            LastName = DbUtils.GetString(reader, "LastName"),
+                            DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
+                            ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+                            UserType = new UserType()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserTypeId"),
+                                Name = DbUtils.GetString(reader, "UserTypeName"),
+                            }
+                        };                        
+                    };
+                    conn.Close();
+                    return userProfile;                    
+                }
+            }
+        }
+
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
             using (var conn = Connection)
