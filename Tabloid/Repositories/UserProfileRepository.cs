@@ -75,10 +75,9 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                          SELECT up.Id, Up.FirebaseUserId, up.FirstName, up.LastName, up.DisplayName, 
                                up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,
-                               ut.Name AS UserTypeName
+                               ut.Name AS UserTypeName,up.IsDeleted
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                          WHERE IsDeleted = 0
                     ";
                     var reader = cmd.ExecuteReader();
                     UserProfile userProfile = null;
@@ -95,6 +94,7 @@ namespace Tabloid.Repositories
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+                            IsDeleted = DbUtils.GetBoolean(reader, "IsDeleted"),
                             UserType = new UserType()
                             {
                                 Id = DbUtils.GetInt(reader, "UserTypeId"),
@@ -199,6 +199,23 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        public void Activate(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Update UserProfile 
+                                        set IsDeleted = 0 
+                                        Where Id = @id";
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    cmd.ExecuteScalar();
+                }
+                conn.Close();
+            }
+        }
+
         public void Delete(int id)
         {
             using (var conn = Connection)
