@@ -17,6 +17,7 @@ import MyPosts from "./posts/MyPosts";
 import AddNewCategory from "./Category/CategoryAddForm";
 import CategoryEditForm from "./Category/CategoryEditForm";
 import PostTagList from "./posts/PostTagList";
+import EditComment from "./Comments/CommentEditForm";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -40,15 +41,15 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route path="/userprofile" exact>
-        {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
+          {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/userprofile/edit/:id">
           {isLoggedIn ? <UserProfileForm /> : <Redirect to="/login" />}
 
-        <Route path="/posts/tag/:id" exact>
-          {isLoggedIn ? <PostTagList /> : <Redirect to="/login" />}
-        </Route>       
+          <Route path="/posts/tag/:id" exact>
+            {isLoggedIn ? <PostTagList /> : <Redirect to="/login" />}
+          </Route>
 
         </Route>
 
@@ -73,17 +74,17 @@ export default function ApplicationViews({ isLoggedIn }) {
           {isLoggedIn ? <CategoryEditForm /> : <Redirect to="/login" />}
         </Route>
 
-       
-
-
         <Route path="/comment/:id" exact>
-          <CommentList />
+          {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/comment/:id/add">
-          <AddNewComment />
+          {isLoggedIn ? <AddNewComment /> : <Redirect to="/login" />}
         </Route>
-        
+
+        <Route path="/comment/:id/edit/:id">
+          {isLoggedIn ? <EditComment /> : <Redirect to="/login" />}
+        </Route>
 
         <Route path="/tag" exact>
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
