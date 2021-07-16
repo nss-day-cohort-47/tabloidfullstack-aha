@@ -118,11 +118,11 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                          SELECT up.Id, Up.FirebaseUserId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,up.IsDeleted,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                          WHERE IsDeleted = 0 And up.Id = @id
+                          WHERE up.Id = @id
                     ";
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -140,6 +140,7 @@ namespace Tabloid.Repositories
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
+                            IsDeleted = DbUtils.GetBoolean(reader, "IsDeleted"),
                             UserType = new UserType()
                             {
                                 Id = DbUtils.GetInt(reader, "UserTypeId"),

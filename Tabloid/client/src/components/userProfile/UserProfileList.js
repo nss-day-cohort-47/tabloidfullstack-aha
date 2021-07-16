@@ -35,10 +35,10 @@ export default function UserProfileList() {
                     <Nav className="mr-auto" navbar>
                         <React.Fragment>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/UserProfile/Add">Add User</NavLink>
+                                
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/UserProfile/Search">Search for user</NavLink>
+                                
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/">Close</NavLink>
