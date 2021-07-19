@@ -98,6 +98,14 @@ const UserProfileForm = () => {
                         autoComplete="off"
                         className="form-control"
                         defaultValue={user.email} />
+                    <label>Image Location</label>
+                    <input type="text"
+                        id="imageLocation"
+                        onChange={handleInputChange}
+                        required
+                        autoComplete="off"
+                        className="form-control"
+                        defaultValue={user.imageLocation} />
                 </FormGroup>
                 <FormGroup>
                     <select value={user.userTypeId} id="userTypeId" onChange={handleSelectChange}>
