@@ -9,7 +9,7 @@ const PostForm = () => {
         const [yyyymmdd, time] = date.split('T');
         return yyyymmdd;
     };
-
+    
     const { addPost, getPostById, updatePost } = useContext(PostContext);
     const { currentUserId } = useContext(UserProfileContext);
     const [userProfileId, setUserProfileId] = useState(0);

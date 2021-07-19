@@ -26,7 +26,7 @@ namespace Tabloid.Repositories
                         FROM Post p
                         LEFT JOIN Category c on c.Id = p.CategoryId
                         LEFT JOIN UserProfile up on up.Id = p.UserProfileId
-                        WHERE p.IsApproved = 1 AND  p.PublishDateTime < SYSDATETIME()
+                        WHERE p.IsApproved = 1 AND p.IsDeleted = 0 AND p.PublishDateTime < SYSDATETIME()
                         ORDER BY p.CreateDateTime DESC";
 
                     var reader = cmd.ExecuteReader();
