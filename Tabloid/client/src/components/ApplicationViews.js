@@ -50,7 +50,7 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route path="/userprofile" exact>
-        {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />
+        {isLoggedIn ? <UserProfileList /> : <Redirect to="/login" />}
         </Route>
          
         <Route path="/userprofile/:id" exact>
