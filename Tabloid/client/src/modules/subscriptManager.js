@@ -20,6 +20,23 @@ export const getSubscriptionStatus = (id) => {
     });
 };
 
+export const getSubscribedPosts = () => {
+    return getToken().then((token) => {
+        return fetch(`${_apiUrl}/getsubscribepost`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(resp => {
+            if (resp.ok) {
+                return resp.json();
+            } else {
+                throw new Error("An unknown error occurred while trying to get subsctiption.");
+            }
+        });
+    });
+};
+
 export const addSubscription = (id) => {
 
     return getToken().then((token) => {
