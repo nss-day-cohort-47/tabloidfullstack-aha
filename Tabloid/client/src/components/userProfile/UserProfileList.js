@@ -52,8 +52,8 @@ export default function UserProfileList() {
             <div className="UserList">
                 <label style={{width: "12em"}}>Name </label>
                 <label style={{width: "14em", marginLeft:".5rem"}}>Display Name</label>
-                <label style={{width: "5em",marginLeft:".5rem"}}>Edit</label>
-                <label style={{width: "5em",marginLeft:".5rem"}}>Remove</label>
+                <label style={{width: "8em",marginLeft:".5rem"}}>Edit</label>
+                <label style={{width: "8em",marginLeft:"-1.5rem"}}>De-Activate</label>
             </div>
         {users.map((user) => (
           <UserProfile user={user} getUsers={getUsers} key={user.id} />
