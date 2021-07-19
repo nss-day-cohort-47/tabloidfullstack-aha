@@ -30,7 +30,7 @@ const CommentList = () => {
                     </Link>
             <div className="row">
                 {post.comments?.map((comment) => (
-                    <Comment comment={comment} post={post} getComments={getComments} key={comment.Id} />
+                    <Comment comment={comment} post={post} getComments={getComments} key={comment.id} />
                 ))}
             </div>
             <Link to={`/comment/${post.id}/add`}>

@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import { PostContext } from "../../modules/PostManager.js";
 import { UserProfileContext } from '../../modules/postUserProfileManager.js';
-
+import { getSubscriptionStatus, deleteSubscription, addSubscription } from '../../modules/subscriptManager.js';
+import { deletePostTag } from '../../modules/tagManager.js';
 
 
 export const PostDetails = () => {
@@ -11,6 +12,7 @@ export const PostDetails = () => {
     const { getPostById, deletePost } = useContext(PostContext);
     const history = useHistory();
     const { currentUserId } = useContext(UserProfileContext);
+    const [isSubscribed, setIsSubscribed] = useState(false)
 
     useEffect(() => {
         getPostById(id).then(setPost);
@@ -24,11 +26,36 @@ export const PostDetails = () => {
         }
     };
 
+
     const handleDate = () => {
         let date = new Date(post.publishDateTime).toLocaleDateString('en-US');
         return date;
     };
 
+    const getSubscription = (postobject) => {
+        if (postobject?.userProfileId > 0) {
+            getSubscriptionStatus(post.userProfileId)
+                .then(sub => {
+                    
+                    setIsSubscribed(sub)
+                })
+        }
+    }
+    console.log(post?.userProfileId)
+
+    const handleSubscribe = () => {
+
+        addSubscription(post.userProfileId).then(() => setIsSubscribed(true))
+    }
+    const handleUnSubscribe = () => {
+        
+        deleteSubscription(post.userProfileId).then(() => setIsSubscribed(false))
+    }
+
+
+    useEffect(() => {
+        getSubscription(post)
+    }, [post])
 
     if (!post) {
         return null;
@@ -56,34 +83,38 @@ export const PostDetails = () => {
                         <p>
                             <strong>Publication Date:</strong> {handleDate()}
                         </p>
+
                         <p>
-                            <p>
-                                <strong>Category:</strong> {post.category?.name}
-                            </p>
+
+                            <strong>Category:</strong> {post.category?.name}
+
                         </p>
-                            <>
-                            <i
+                        <>
+                            <button
                                 className="fas fa-trash-alt fa-2x"
                                 onClick={handleDelete}
                                 style={{ cursor: 'pointer' }}
-                            >Sup</i>
-                            <i
+                            >Delete</button>
+                            <button
                                 className="far fa-edit fa-2x"
                                 style={{ cursor: 'pointer' }}
                                 onClick={() => {
                                     history.push(`/edit/${post.id}`);
                                 }}
-                            >Edit</i>
+                            >Edit</button>
                         </>
-                </div>
-                    
+                    </div>
+
 
                     <p>{post.content}</p>
                     <Link to={`/comment/${post.id}`}>
                         <button>View Comments</button>
                     </Link>
                     {/* tags go here */}
-                    <button onClick={()=> history.push(`/posts/tag/${post.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Manage Tags</button>
+                    <button onClick={() => history.push(`/posts/tag/${post.id}`)} >Manage Tags</button>
+                    {isSubscribed ? <button onClick={handleUnSubscribe} >UnSubscribe</button> :
+                        <button onClick={handleSubscribe} >Subscribe</button>
+                    }
                 </div>
             </div>
         </div>
