@@ -94,8 +94,8 @@ const UserCard = () => {
             </Card>
             <div>
                 <button type="button" onClick={() => handleClick(user, 0)} style={{ width: "5em", marginLeft: ".5rem" }}>Edit</button>
-                {!user.isDeleted && <button type="button" onClick={() => handleClick(user, 1)} style={{ width: "5em", marginLeft: ".5rem" }}>Remove</button>}
-                {user.isDeleted && <button type="button" onClick={() => handleClick(user, 2)} style={{ width: "5em", marginLeft: ".5rem" }}>Activate</button>}
+                {!user.isDeleted && <button type="button" onClick={() => handleClick(user, 1)} style={{ width: "8em", marginLeft: ".5rem" }}>De-Activate</button>}
+                {user.isDeleted && <button type="button" onClick={() => handleClick(user, 2)} style={{ width: "8em", marginLeft: ".5rem" }}>Activate</button>}
                 <button type="button" onClick={() => handleClick(user, 3)} style={{ width: "5em", marginLeft: "3rem" }}>Return</button>
             </div>
         </div>

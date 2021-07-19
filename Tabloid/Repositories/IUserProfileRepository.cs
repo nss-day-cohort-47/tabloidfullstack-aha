@@ -8,7 +8,7 @@ namespace Tabloid.Repositories
         void Activate(int id);
         void Add(UserProfile userProfile);
         UserProfile CheckUnique(UserProfile user);
-        void Delete(int id);
+        bool Delete(int id);
         void Edit(UserProfile user);
         List<UserProfile> GetAllUsers();
         UserProfile GetByFirebaseUserId(string firebaseUserId);

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using Tabloid.Models;
 using Tabloid.Repositories;
 
 namespace Tabloid.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -64,8 +66,9 @@ namespace Tabloid.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _userProfileRepository.Delete(id);
-            return NoContent();
+            int msg = 200;
+            if (!_userProfileRepository.Delete(id)) msg = 666;
+            return StatusCode(msg);
         }
         [HttpPut("{id}")]
         public IActionResult Put(int id, UserProfile user)

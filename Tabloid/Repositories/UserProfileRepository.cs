@@ -217,8 +217,13 @@ namespace Tabloid.Repositories
             }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            UserProfile testForAdmin = GetUserById(id);
+            if(testForAdmin.UserTypeId == 2)
+            {
+                if (CheckForLastAdmin()) return false;
+            }
             using (var conn = Connection)
             {
                 conn.Open();
@@ -231,6 +236,7 @@ namespace Tabloid.Repositories
                     cmd.ExecuteScalar();
                 }
                 conn.Close();
+                return true;
             }
         }
         public void Add(UserProfile userProfile)
@@ -258,7 +264,25 @@ namespace Tabloid.Repositories
                 }
             }
         }
-
+        private bool CheckForLastAdmin()
+        {
+            using(var conn = Connection)
+            {
+                conn.Open();
+                using(var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                    Select Count(*) From UserProfile
+                                    Where UserTypeId = 2 and IsDeleted = 0";
+                    var admins = cmd.ExecuteScalar();
+                    if((int)admins == 1)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         /*
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
