@@ -4,6 +4,7 @@ import { Category } from "./CategoryCard";
 import { useHistory } from "react-router";
 import React, { useState, useEffect } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
+import "./Category.css"
 import {
     Collapse,
     Navbar,
@@ -13,7 +14,6 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-
 
 
 
@@ -43,9 +43,8 @@ export const CategoryList = ({category}) => {
   //IT IS INTERPRETED AS AN ARRAY IN JAVASCRIPT (like for the .map method)
   return (
     <>
-    <h2>CATEGORY MANAGEMENT</h2>
+      <div className="CategoryMain">
     {/* <button onClick={()=> history.push(`/category/add/${category.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Add Category</button> */}
-      <div>
       <Navbar color="light" light expand="md">
                 <NavbarBrand tag={RRNavLink} to="/Tag">Category</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
