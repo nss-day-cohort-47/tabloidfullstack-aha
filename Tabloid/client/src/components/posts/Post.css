@@ -1,0 +1,28 @@
+.postImageC{
+    width: 100%;
+    max-height: 20em;
+    object-fit: cover;
+}
+.buttons button {
+    margin-left: .5%;
+    transition-duration: 0.4s;
+}
+.buttons button:hover {
+    background-color: #879194;
+    color: ivory;
+}
+#holdingall{
+    min-width: 100%;
+}
+.post-subheader{
+    display: flex;
+}
+
+.post-subheader p{
+    margin-right: 5%
+}
+.postImageB{
+    min-width: 100%;
+    max-height: 35%;
+    object-fit: cover;
+}

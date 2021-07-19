@@ -3,6 +3,7 @@ import { Card, CardBody, Button } from "reactstrap";
 import { deleteCategory, getAllCategories } from "../../modules/categoryManager";
 import { useHistory } from "react-router";
 import { AddNewCategory } from "./CategoryAddForm";
+import "./Category.css"
 
 export const Category = ({ category }) => {
 
@@ -25,7 +26,7 @@ export const Category = ({ category }) => {
 <CardBody>
 <div className="CategoryList">
 <label style={{width: "10em"}}>{category.name} </label>
-<button onClick={()=> history.push(`/category/edit/${category.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Edit</button>
+<button className="CategoryEdit" onClick={()=> history.push(`/category/edit/${category.id}`)} style={{width: "5em",marginLeft:".5rem"}}>Edit</button>
 <button onClick={deletecategory} style={{width: "5em",marginLeft:".5rem"}}>Delete</button>
     </div>
 </CardBody>

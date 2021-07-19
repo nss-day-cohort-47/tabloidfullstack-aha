@@ -35,13 +35,7 @@ export default function UserProfileList() {
                     <Nav className="mr-auto" navbar>
                         <React.Fragment>
                             <NavItem>
-                                
-                            </NavItem>
-                            <NavItem>
-                                
-                            </NavItem>
-                            <NavItem>
-                                <NavLink tag={RRNavLink} to="/">Close</NavLink>
+                                <NavLink className="UserColor" tag={RRNavLink} to="/">Close</NavLink>
                             </NavItem>
                         </React.Fragment>
                     </Nav>

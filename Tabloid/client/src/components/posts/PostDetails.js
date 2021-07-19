@@ -4,6 +4,7 @@ import { PostContext } from "../../modules/PostManager.js";
 import { UserProfileContext } from '../../modules/postUserProfileManager.js';
 import { getSubscriptionStatus, deleteSubscription, addSubscription } from '../../modules/subscriptManager.js';
 import { deletePostTag } from '../../modules/tagManager.js';
+import "./Post.css"
 
 
 export const PostDetails = () => {
@@ -65,56 +66,30 @@ export const PostDetails = () => {
     return (
         <div className="container">
             <div className="row justify-content-center">
-                <div className="col-sm-12 col-lg-6">
-                    <img src={post.imageLocation} />
+                <div className="col-sm-12 col-lg-6" id="holdingall">
+                <img className="postImageB" src={post.imageLocation} />
                     <h1>{post.title}</h1>
-                    <div
-                        className="post-byline"
-                        style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                        }}
-                    >
+                    <div className="post-subheader">
                         <p>
                             <strong>Author:</strong>{' '}
                             {post.userProfile?.displayName}
                         </p>
-                        <p>
-                            <strong>Publication Date:</strong> {handleDate()}
-                        </p>
-
-                        <p>
-
-                            <strong>Category:</strong> {post.category?.name}
-
-                        </p>
-                        <>
-                            <button
-                                className="fas fa-trash-alt fa-2x"
-                                onClick={handleDelete}
-                                style={{ cursor: 'pointer' }}
-                            >Delete</button>
-                            <button
-                                className="far fa-edit fa-2x"
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => {
-                                    history.push(`/edit/${post.id}`);
-                                }}
-                            >Edit</button>
-                        </>
+                        <p> <strong>Publication Date:</strong> {handleDate()} </p>
+                        <p> <strong>Category:</strong> {post.category?.name} </p>
                     </div>
-
-
+                    <div className = "content">
                     <p>{post.content}</p>
-                    <Link to={`/comment/${post.id}`}>
+                    </div>
+                    <a className="buttons">
+                    <Link to={`/comment/${post.id}`}><i class="fas fa-comments"></i>
                         <button>View Comments</button>
                     </Link>
-                    {/* tags go here */}
                     <button onClick={() => history.push(`/posts/tag/${post.id}`)} >Manage Tags</button>
                     {isSubscribed ? <button onClick={handleUnSubscribe} >UnSubscribe</button> :
-                        <button onClick={handleSubscribe} >Subscribe</button>
-                    }
+                        <button onClick={handleSubscribe} >Subscribe</button>}
+                    <button className="fas fa-trash-alt fa-2x" onClick={handleDelete} style={{ cursor: 'pointer' }}>Delete</button>
+                    <button className="far fa-edit fa-2x" style={{ cursor: 'pointer' }} onClick={() => { history.push(`/edit/${post.id}`);}}>Edit</button>
+                      </a>
                 </div>
             </div>
         </div>
