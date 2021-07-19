@@ -43,15 +43,9 @@ const CommentList = () => {
                     </Nav>
                 </Collapse>
             </Navbar>
-            {/* <div className="UserList">
-                <label style={{ width: "12em" }}>Comment</label>
-            </div> */}
             {post.comments?.map((comment) => (
                 <Comment comment={comment} post={post} getComments={getComments} key={comment.id} />
             ))}
-            <Link to={`/comment/${post.id}/add`}>
-                <Button>Add Comment</Button>
-            </Link>
         </div>
     );
 }
