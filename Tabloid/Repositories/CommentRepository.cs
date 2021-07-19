@@ -143,7 +143,7 @@ namespace Tabloid.Repositories
             }
         }
 
-        public void AddComment(Comment comment)
+        public void AddComment(int userProfileId, Comment comment)
         {
             using (var conn = Connection)
             {
@@ -157,7 +157,7 @@ namespace Tabloid.Repositories
                     ";
 
                     cmd.Parameters.AddWithValue("@postId", comment.PostId);
-                    cmd.Parameters.AddWithValue("@userProfileId", comment.UserProfileId);
+                    cmd.Parameters.AddWithValue("@userProfileId", userProfileId);
                     cmd.Parameters.AddWithValue("@subject", comment.Subject);
                     cmd.Parameters.AddWithValue("@content", comment.Content);
                     cmd.Parameters.AddWithValue("@createDateTime", DateTime.Now);

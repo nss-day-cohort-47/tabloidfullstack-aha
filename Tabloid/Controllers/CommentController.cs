@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Tabloid.Models;
 using Tabloid.Repositories;
@@ -15,9 +16,12 @@ namespace Tabloid.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepository;
-        public CommentController(ICommentRepository commentRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public CommentController(ICommentRepository commentRepository,
+                                 IUserProfileRepository userProfileRepository)
         {
             _commentRepository = commentRepository;
+            _userProfileRepository = userProfileRepository;
         }
         // GET: api/<CommentController>
         [HttpGet("{postId}")]
@@ -28,10 +32,19 @@ namespace Tabloid.Controllers
 
         // POST api/<CommentController>
         [HttpPost]
-        public IActionResult AddComment(Comment comment)
+        public IActionResult AddComment(int userProfileId, Comment comment)
         {
-            _commentRepository.AddComment(comment);
+            var user = GetCurrentUserProfile();
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+            _commentRepository.AddComment(user.Id, comment);
             return Ok(comment);
+
+            }
         }
 
         // PUT api/<CommentController>/5
@@ -64,6 +77,21 @@ namespace Tabloid.Controllers
                 return NotFound();
             }
             return Ok(comment);
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (firebaseUserId != null)
+            {
+                var user = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+                return user;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

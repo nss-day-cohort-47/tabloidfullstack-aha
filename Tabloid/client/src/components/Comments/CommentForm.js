@@ -7,7 +7,6 @@ const AddNewComment = () => {
     const { id } = useParams();
     const [comment, setComment] = useState({
         postId: id,
-        userProfileId: 1,
         subject: "",
         content: ""
     });
