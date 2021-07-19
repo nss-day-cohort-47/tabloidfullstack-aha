@@ -45,6 +45,7 @@ export default function UserProfileList() {
             <div>
             <div className="UserList">
                 <label style={{width: "12em"}}>Name </label>
+                <label style={{width: "2em"}}> </label>
                 <label style={{width: "14em", marginLeft:".5rem"}}>Display Name</label>
                 <label style={{width: "8em",marginLeft:".5rem"}}>Edit</label>
                 <label style={{width: "8em",marginLeft:"-1.5rem"}}>De-Activate</label>
