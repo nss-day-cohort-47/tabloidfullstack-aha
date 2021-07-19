@@ -28,7 +28,7 @@ const AddNewComment = () => {
 
     const handleCancelSave = (evt) => {
         evt.preventDefault();
-        history.push("/")
+        history.push(`/comment/${id}`)
     };
 
     return (
