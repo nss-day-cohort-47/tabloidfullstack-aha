@@ -34,6 +34,21 @@ namespace Tabloid.Controllers
             }
         }
 
+        [HttpGet("getsubscribepost")]
+        public IActionResult GetSubscriptionPosts()
+        {
+            var user = GetCurrentUserProfile();
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var posts = _subscriptionRepository.GetAllSubscribersPostsByUserId(user.Id);
+                return Ok(posts);
+            }
+        }
+
         [HttpPost("{postId}")]
         public IActionResult Post(int postId)
         {
