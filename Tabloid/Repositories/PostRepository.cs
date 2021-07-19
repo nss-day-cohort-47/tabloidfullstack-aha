@@ -121,9 +121,9 @@ namespace Tabloid.Repositories
                     FROM Post p
                     LEFT JOIN Category c on c.Id = p.CategoryId
                     LEFT JOIN UserProfile up on up.Id = p.UserProfileId
-                    LEFT JOIN Comment com on com.PostId = p.Id
+                    LEFT JOIN Comment com on com.PostId = p.Id AND com.isDeleted = 0
                     LEFT JOIN UserProfile usp on usp.Id = com.UserProfileId
-                    WHERE p.Id = @Id AND p.isDeleted = 0 AND com.isDeleted = 0";
+                    WHERE p.Id = @Id AND p.isDeleted = 0";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 

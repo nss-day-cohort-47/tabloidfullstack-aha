@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
 import { useParams, Link, NavLink as RRNavLink } from "react-router-dom";
 import { PostContext } from "../../modules/PostManager";
-import { Navbar, Nav, NavLink, Button, NavbarBrand, NavbarToggler, NavItem, Collapse } from "reactstrap";
+import { Navbar, Nav, Button, NavLink, NavbarBrand, NavbarToggler, NavItem, Collapse } from "reactstrap";
 import { getAllCommentsByPost } from "../../modules/commentManager";
 
 const CommentList = () => {
@@ -49,9 +49,9 @@ const CommentList = () => {
             {post.comments?.map((comment) => (
                 <Comment comment={comment} post={post} getComments={getComments} key={comment.id} />
             ))}
-            {/* <Link to={`/comment/${post.id}/add`}>
+            <Link to={`/comment/${post.id}/add`}>
                 <Button>Add Comment</Button>
-            </Link> */}
+            </Link>
         </div>
     );
 }
