@@ -118,7 +118,7 @@ namespace Tabloid.Repositories
                     FROM Post p
                     LEFT JOIN Category c on c.Id = p.CategoryId
                     LEFT JOIN UserProfile up on up.Id = p.UserProfileId
-                    WHERE p.UserProfileId = @Id
+                    WHERE p.UserProfileId = @Id AND p.isDeleted = 0
                     ORDER BY p.CreateDateTime DESC";
 
                     DbUtils.AddParameter(cmd, "@Id", userProfileId);
@@ -231,7 +231,7 @@ namespace Tabloid.Repositories
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE PublishDateTime < SYSDATETIME() AND u.FirebaseUserId = @FirebaseUserId
+                        WHERE PublishDateTime < SYSDATETIME() AND u.FirebaseUserId = @FirebaseUserId AND p.isDeleted = 0
                         ORDER BY PublishDateTime DESC";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", FirebaseUserId);
                     var reader = cmd.ExecuteReader();
