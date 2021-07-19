@@ -38,7 +38,7 @@ export default function UserProfile({ user, getUsers }) {
                 <div className="UserList">
                     <a href="#" onClick={()=>getDetail()}><label style={{ width: "12em" }}>{user.fullName} </label></a>
                     
-                    <img width="50px" src={user.imageLocation} alt={user.displayName}/>
+                    <img width="30px" src={user.imageLocation} alt={user.displayName}/>
                     <label style={{ width: "12em", marginLeft: ".5rem" }}>{user.displayName}</label>
                     <button type="button" onClick={() => handleClick(user, 0)} style={{ width: "5em", marginLeft: ".5rem" }}>Edit</button>
                     {!user.isDeleted && <button type="button" onClick={() => handleClick(user, 1)} style={{ width: "8em", marginLeft: ".5rem" }}>De-Activate</button>}
