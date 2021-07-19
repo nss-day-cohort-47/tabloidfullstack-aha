@@ -106,7 +106,7 @@ namespace Tabloid.Repositories
                             JOIN UserProfile up ON s.ProviderUserProfileId = up.Id 
                             JOIN Post p ON p.UserProfileId = up.Id                 
                             LEFT JOIN Category c on c.Id = p.CategoryId   
-                            WHERE s.SubscriberUserProfileId = @loggedInUserId and p.IsDeleted = 0";
+                            WHERE s.SubscriberUserProfileId = @loggedInUserId and p.IsDeleted = 0 and up.IsDeleted=0";
                     cmd.Parameters.AddWithValue("@loggedInUserId", loggedInUserId);
 
                     var reader = cmd.ExecuteReader();
