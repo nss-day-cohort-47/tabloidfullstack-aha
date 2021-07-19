@@ -63,7 +63,7 @@ namespace Tabloid.Repositories
                     LEFT JOIN UserProfile up on up.Id = p.UserProfileId
                     LEFT JOIN Comment com on com.PostId = p.Id
                     LEFT JOIN UserProfile usp on usp.Id = com.UserProfileId
-                    WHERE p.Id = @Id AND p.isDeleted = 0 and com.isDeleted = 0";
+                    WHERE p.Id = @Id AND p.isDeleted = 0";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
 
