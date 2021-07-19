@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import Comment from "./Comment";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, NavLink as RRNavLink } from "react-router-dom";
 import { PostContext } from "../../modules/PostManager";
-import { Button } from "reactstrap";
+import { Navbar, Nav, Button, NavLink, NavbarBrand, NavbarToggler, NavItem, Collapse } from "reactstrap";
 import { getAllCommentsByPost } from "../../modules/commentManager";
 
 const CommentList = () => {
     const [post, setPost] = useState({});
+    const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen);
     const [comments, setComments] = useState([]);
-    const { getPostById } = useContext(PostContext);
+    const { getPostByIdWithComments } = useContext(PostContext);
     const { id } = useParams();
-    
+
     const getPost = () => {
-        getPostById(id).then(post => setPost(post));
+        getPostByIdWithComments(id).then(post => setPost(post));
     }
 
     const getComments = () => {
@@ -25,17 +27,25 @@ const CommentList = () => {
 
     return (
         <div className="container">
-            <Link to={`/posts/${post.id}`}>
-                        <strong>{post.title}</strong>
-                    </Link>
-            <div className="row">
-                {post.comments?.map((comment) => (
-                    <Comment comment={comment} post={post} getComments={getComments} key={comment.id} />
-                ))}
-            </div>
-            <Link to={`/comment/${post.id}/add`}>
-                <Button>Add Comment</Button>
-            </Link>
+            <Navbar color="light" light expand="md">
+                <NavbarBrand tag={RRNavLink} to={`/comment/${post.id}`}>Comments</NavbarBrand>
+                <NavbarToggler onClick={toggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        <React.Fragment>
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to={`/comment/${post.id}/add`}>Add Comment</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to={`/posts/${post.id}`}>Close</NavLink>
+                            </NavItem>
+                        </React.Fragment>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+            {post.comments?.map((comment) => (
+                <Comment comment={comment} post={post} getComments={getComments} key={comment.id} />
+            ))}
         </div>
     );
 }

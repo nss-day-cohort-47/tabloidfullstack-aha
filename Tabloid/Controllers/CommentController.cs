@@ -32,7 +32,7 @@ namespace Tabloid.Controllers
 
         // POST api/<CommentController>
         [HttpPost]
-        public IActionResult AddComment(int userProfileId, Comment comment)
+        public IActionResult AddComment(int Id, Comment comment)
         {
             var user = GetCurrentUserProfile();
             if (user == null)

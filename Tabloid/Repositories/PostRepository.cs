@@ -103,6 +103,66 @@ namespace Tabloid.Repositories
             }
         }
 
+        public Post GetPostByIdWithComments(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT p.Id, p.Title, p.Content, p.ImageLocation, p.CreateDateTime, p.PublishDateTime,
+                           p.IsApproved, p.CategoryId, p.UserProfileId,
+                           c.Name AS CategoryName,
+                           up.DisplayName, com.Id AS CommentId,
+                           com.PostId AS CommentPostId, com.UserProfileId AS CommentUserProfileId, 
+                           com.Subject, com.Content AS CommentContent, com.CreateDateTime AS CommentCreateDateTime,
+                           usp.DisplayName AS CommentUserProfileDisplayName        
+                    FROM Post p
+                    LEFT JOIN Category c on c.Id = p.CategoryId
+                    LEFT JOIN UserProfile up on up.Id = p.UserProfileId
+                    LEFT JOIN Comment com on com.PostId = p.Id AND com.isDeleted = 0
+                    LEFT JOIN UserProfile usp on usp.Id = com.UserProfileId
+                    WHERE p.Id = @Id AND p.isDeleted = 0";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Post post = null;
+                    while (reader.Read())
+                    {
+                        if (post == null)
+                        {
+                            post = NewPostFromDb(reader);
+                            post.Comments = new List<Comment>();
+                        }
+                        if (DbUtils.IsNotDbNull(reader, "CommentId"))
+                        {
+                            post.Comments.Add(new Comment()
+                            {
+                                Id = DbUtils.GetInt(reader, "CommentId"),
+                                PostId = id,
+                                UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId"),
+                                Subject = DbUtils.GetString(reader, "Subject"),
+                                Content = DbUtils.GetString(reader, "CommentContent"),
+                                CreateDateTime = DbUtils.GetDateTime(reader, "CommentCreateDateTime"),
+                                UserProfile = new UserProfile()
+                                {
+                                    DisplayName = DbUtils.GetString(reader, "CommentUserProfileDisplayName")
+                                }
+                            });
+                        }
+                    }
+
+                    reader.Close();
+
+                    return post;
+                }
+
+            }
+        }
+
         public List<Post> GetPostByUserProfileId(int userProfileId)
         {
             using (var conn = Connection)
