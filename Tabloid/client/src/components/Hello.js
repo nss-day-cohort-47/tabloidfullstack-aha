@@ -1,17 +1,17 @@
 import {React, useContext} from "react";
 import { UserProfileContext } from '../modules/postUserProfileManager.js';
+import thing from "./TABLOIDBOLD.jpg"
+import "./Hello.css";
+
 export default function Hello() {
   const {currentUserId} = useContext(UserProfileContext);
 
   console.log(currentUserId)
   return (
-    <span style={{
-      position: "fixed",
-      left: 0,
-      right: 0,
-      top: "50%",
-      marginTop: "-0.5rem",
-      textAlign: "center",
-    }}>hello</span>
+    <div>
+    <img src={thing}  className="centerme" alt="user img"/>
+    
+    </div>
   );
 }
+
