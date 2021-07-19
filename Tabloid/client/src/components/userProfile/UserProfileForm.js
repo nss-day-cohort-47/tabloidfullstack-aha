@@ -70,7 +70,7 @@ const UserProfileForm = () => {
                         onChange={handleInputChange}
                         required
                         autoComplete="off"
-                        className="form-control"
+                        className="form-control inputClass"
                         defaultValue={user.firstName} />
                     <label>Last Name</label>
                     <input type="text"
@@ -78,7 +78,7 @@ const UserProfileForm = () => {
                         onChange={handleInputChange}
                         required
                         autoComplete="off"
-                        className="form-control"
+                        className="form-control inputClass"
                         defaultValue={user.lastName} />
                     <label>Diplay Name</label>
                     <input type="text"
@@ -86,7 +86,7 @@ const UserProfileForm = () => {
                         onChange={handleInputChange}
                         required
                         autoComplete="off"
-                        className="form-control"
+                        className="form-control inputClass"
                         defaultValue={user.displayName} />
                 </FormGroup>
                 <FormGroup>
@@ -96,8 +96,18 @@ const UserProfileForm = () => {
                         onChange={handleInputChange}
                         required
                         autoComplete="off"
-                        className="form-control"
-                        defaultValue={user.email} />
+                        className="form-control inputClass"
+                        defaultValue={user.email} 
+                        readonly/>
+                    <label>Image Location</label>
+                    <input type="text"
+                        id="imageLocation"
+                        onChange={handleInputChange}
+                        required
+                        autoComplete="off"
+                        className="form-control inputClass"
+                        defaultValue={user.imageLocation} 
+                        readonly/>
                 </FormGroup>
                 <FormGroup>
                     <select value={user.userTypeId} id="userTypeId" onChange={handleSelectChange}>
