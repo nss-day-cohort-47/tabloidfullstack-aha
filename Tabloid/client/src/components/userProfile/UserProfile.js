@@ -39,7 +39,7 @@ export default function UserProfile({ user, getUsers }) {
                     <a href="#" onClick={()=>getDetail()}><label style={{ width: "12em" }}>{user.fullName} </label></a>
                     <label style={{ width: "12em", marginLeft: ".5rem" }}>{user.displayName}</label>
                     <button type="button" onClick={() => handleClick(user, 0)} style={{ width: "5em", marginLeft: ".5rem" }}>Edit</button>
-                    {!user.isDeleted && <button type="button" onClick={() => handleClick(user, 1)} style={{ width: "5em", marginLeft: ".5rem" }}>Remove</button>}
+                    {!user.isDeleted && <button type="button" onClick={() => handleClick(user, 1)} style={{ width: "5em", marginLeft: ".5rem" }}>De-Activate</button>}
                     {user.isDeleted && <button type="button" onClick={() => handleClick(user, 2)} style={{ width: "5em", marginLeft: ".5rem" }}>Activate</button>}
                 </div>
             </CardBody>
